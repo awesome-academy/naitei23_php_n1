@@ -7,31 +7,298 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Về Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Laravel là một framework web với cú pháp rõ ràng và thanh lịch. Chúng tôi tin rằng phát triển phải là một trải nghiệm thú vị và sáng tạo. Laravel giúp việc phát triển trở nên dễ dàng hơn bằng cách đơn giản hóa các tác vụ thường dùng trong nhiều dự án web, chẳng hạn như:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Hệ thống routing đơn giản, nhanh chóng](https://laravel.com/docs/routing).
+- [Container dependency injection mạnh mẽ](https://laravel.com/docs/container).
+- Nhiều backend cho [session](https://laravel.com/docs/session) và [cache](https://laravel.com/docs/cache).
+- [ORM database](https://laravel.com/docs/eloquent) trực quan, dễ hiểu.
+- [Schema migrations](https://laravel.com/docs/migrations) độc lập với database.
+- [Xử lý background job](https://laravel.com/docs/queues) mạnh mẽ.
+- [Broadcasting sự kiện real-time](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Laravel dễ tiếp cận, mạnh mẽ và cung cấp các công cụ cần thiết cho các ứng dụng lớn, phức tạp.
 
-## Learning Laravel
+## Hệ Thống Đặt Tour
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Đây là hệ thống đặt tour dựa trên Laravel với xác thực toàn diện, kiểm soát truy cập dựa trên vai trò (RBAC), và các tính năng quản lý tour.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Tính Năng
 
-## Laravel Sponsors
+- **Xác Thực & Phân Quyền:**
+  - Đăng ký, đăng nhập, đăng xuất bằng email/mật khẩu
+  - Đặt lại mật khẩu qua email sử dụng [Mailtrap](https://mailtrap.io/) để test an toàn ở môi trường local
+  - Xác nhận mật khẩu và cập nhật mật khẩu
+  - Kiểm soát truy cập dựa trên vai trò (Admin, Customer)
+  - Hệ thống quản lý quyền
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- **Quản Lý Tour:**
+  - Quản lý danh mục
+  - Tour với lịch trình, giá cả và tình trạng có sẵn
+  - Hệ thống đặt tour với theo dõi thanh toán
+  - Đánh giá và bình luận
+  - Chức năng thích
 
-### Premium Partners
+- **Quản Lý Người Dùng:**
+  - Quản lý hồ sơ (tên, email, cập nhật mật khẩu)
+  - Tự xóa tài khoản
+  - Quản lý tài khoản ngân hàng của người dùng
+  - Dữ liệu session lưu trong database để cải thiện khả năng quan sát và bảo mật
+
+## Yêu Cầu Hệ Thống
+
+- **PHP:** >= 8.1
+- **Composer:** Phiên bản mới nhất
+- **Node.js:** >= 16.x và npm
+- **MySQL:** >= 5.7 hoặc MariaDB >= 10.3
+- **Web Server:** Apache/Nginx (hoặc sử dụng `php artisan serve`)
+
+## Cài Đặt & Thiết Lập
+
+### 1. Clone repository
+
+```bash
+git clone <repository-url>
+cd naitei23_php_n1
+```
+
+### 2. Cài đặt PHP dependencies
+
+```bash
+composer install
+```
+
+### 3. Cài đặt Node.js dependencies
+
+```bash
+npm install
+```
+
+### 4. Cấu hình môi trường
+
+Sao chép file `.env.example` thành `.env` (nếu chưa có):
+
+```bash
+cp .env.example .env
+```
+
+Tạo application key:
+
+```bash
+php artisan key:generate
+```
+
+### 5. Cấu hình file `.env`
+
+Cập nhật các biến sau trong file `.env` của bạn:
+
+#### Cài Đặt Ứng Dụng
+```env
+APP_NAME="Tour Booking System"
+APP_ENV=local
+APP_KEY=base64:... (được tạo bởi key:generate)
+APP_DEBUG=true
+APP_URL=http://localhost
+```
+
+#### Cấu Hình Database
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=tour_booking_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+**Lưu ý:** Tạo database trong phpMyAdmin hoặc MySQL trước khi chạy migrations:
+- Tên database: `tour_booking_db` (hoặc tên bạn muốn)
+- Collation: `utf8mb4_unicode_ci`
+
+#### Cấu Hình Mail (Mailtrap cho Development)
+
+1. Đăng ký tài khoản miễn phí tại [Mailtrap](https://mailtrap.io/)
+2. Tạo inbox và lấy thông tin SMTP credentials
+3. Cập nhật file `.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your-mailtrap-username
+MAIL_PASSWORD=your-mailtrap-password
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="no-reply@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+#### Cấu Hình Session
+```env
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+```
+
+#### Cấu Hình Cache & Queue
+```env
+CACHE_DRIVER=file
+QUEUE_CONNECTION=sync
+FILESYSTEM_DRIVER=local
+```
+
+### 6. Chạy Database Migrations
+
+```bash
+php artisan migrate
+```
+
+Lệnh này sẽ tạo tất cả các bảng cần thiết bao gồm:
+- Users, roles, permissions
+- Categories, tours, tour schedules
+- Bookings, payments
+- Reviews, comments, likes
+- User bank accounts
+- Sessions table
+
+### 7. Seed Database (Tùy chọn nhưng khuyến nghị)
+
+Chạy seeders để tạo dữ liệu ban đầu:
+
+```bash
+php artisan db:seed
+```
+
+Lệnh này sẽ tạo:
+- **Roles:** Admin, Customer
+- **Permissions:** Các quyền khác nhau cho quản lý tour và người dùng
+- **Users:**
+  - Admin: `admin.account@sun-asterisk.com` / `admin123`
+  - Customer: `customer@example.com` / `password`
+- **Categories:** Các danh mục tour mẫu
+
+### 8. Build Frontend Assets
+
+Cho môi trường development:
+
+```bash
+npm run dev
+```
+
+Cho môi trường production:
+
+```bash
+npm run build
+```
+
+### 9. Khởi Động Development Servers
+
+**Terminal 1 - Laravel Server:**
+```bash
+php artisan serve
+```
+
+**Terminal 2 - Vite Dev Server (nếu sử dụng `npm run dev`):**
+```bash
+npm run dev
+```
+
+Ứng dụng sẽ có sẵn tại: `http://localhost:8000`
+
+## Tài Khoản Mặc Định
+
+Sau khi chạy seeders, bạn có thể đăng nhập với:
+
+**Tài Khoản Admin:**
+- Email: `admin.account@sun-asterisk.com`
+- Mật khẩu: `admin123`
+
+**Tài Khoản Customer:**
+- Email: `customer@example.com`
+- Mật khẩu: `password`
+
+## Cấu Trúc Dự Án
+
+```
+app/
+├── Http/Controllers/
+│   ├── Auth/          # Controllers xác thực
+│   └── Api/           # API controllers
+├── Models/            # Eloquent models
+└── Providers/        # Service providers
+
+database/
+├── migrations/        # Database migrations
+└── seeders/          # Database seeders
+
+resources/
+├── views/            # Blade templates
+├── css/              # Stylesheets
+└── js/               # JavaScript files
+
+routes/
+├── web.php           # Web routes
+├── api.php           # API routes
+└── auth.php          # Authentication routes
+```
+
+## Các Lệnh Thường Dùng
+
+```bash
+# Chạy migrations
+php artisan migrate
+
+# Chạy migrations với seeders
+php artisan migrate:fresh --seed
+
+# Xóa cache cấu hình
+php artisan config:clear
+
+# Xóa tất cả cache
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+
+# Chạy tests
+php artisan test
+```
+
+## Xử Lý Sự Cố
+
+### Lỗi Kết Nối Database
+- Đảm bảo MySQL/MariaDB đang chạy
+- Kiểm tra thông tin đăng nhập database trong `.env`
+- Tạo database nếu chưa tồn tại
+
+### Mail Không Gửi Được
+- Kiểm tra thông tin Mailtrap trong `.env`
+- Xác minh Mailtrap inbox đang hoạt động
+- Kiểm tra `storage/logs/laravel.log` để xem lỗi
+
+### Assets Không Tải
+- Chạy `npm install` để cài đặt dependencies
+- Chạy `npm run dev` hoặc `npm run build`
+- Xóa cache trình duyệt
+
+### Lỗi Phân Quyền (Linux/Mac)
+```bash
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+```
+
+Người dùng có thể quản lý hồ sơ tại `/profile`, trong khi quản trị viên có thể sử dụng cùng giao diện để cập nhật thông tin của họ.
+
+## Học Laravel
+
+Laravel có [tài liệu](https://laravel.com/docs) và thư viện video hướng dẫn toàn diện nhất trong tất cả các framework web hiện đại, giúp bạn dễ dàng bắt đầu với framework này.
+
+Nếu bạn không muốn đọc, [Laracasts](https://laracasts.com) có thể giúp bạn. Laracasts chứa hơn 1500 video hướng dẫn về nhiều chủ đề bao gồm Laravel, PHP hiện đại, unit testing, và JavaScript. Nâng cao kỹ năng của bạn bằng cách khám phá thư viện video toàn diện của chúng tôi.
+
+## Nhà Tài Trợ Laravel
+
+Chúng tôi muốn gửi lời cảm ơn đến các nhà tài trợ sau đây đã tài trợ cho việc phát triển Laravel. Nếu bạn quan tâm đến việc trở thành nhà tài trợ, vui lòng truy cập [trang Patreon của Laravel](https://patreon.com/taylorotwell).
+
+### Đối Tác Cao Cấp
 
 - **[Vehikl](https://vehikl.com/)**
 - **[Tighten Co.](https://tighten.co)**
@@ -47,18 +314,18 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 - **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
 - **[Lendio](https://lendio.com)**
 
-## Contributing
+## Đóng Góp
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Cảm ơn bạn đã cân nhắc đóng góp cho framework Laravel! Hướng dẫn đóng góp có thể được tìm thấy trong [tài liệu Laravel](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+## Quy Tắc Ứng Xử
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Để đảm bảo rằng cộng đồng Laravel chào đón tất cả mọi người, vui lòng xem xét và tuân thủ [Quy Tắc Ứng Xử](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+## Lỗ Hổng Bảo Mật
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Nếu bạn phát hiện lỗ hổng bảo mật trong Laravel, vui lòng gửi email cho Taylor Otwell qua [taylor@laravel.com](mailto:taylor@laravel.com). Tất cả các lỗ hổng bảo mật sẽ được xử lý kịp thời.
 
-## License
+## Giấy Phép
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Framework Laravel là phần mềm mã nguồn mở được cấp phép theo [giấy phép MIT](https://opensource.org/licenses/MIT).
