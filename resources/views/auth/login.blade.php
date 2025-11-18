@@ -6,50 +6,53 @@
             </a>
         </x-slot>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+        <div class="mb-8 text-center">
+            <h1 class="text-2xl font-semibold text-slate-800">Đăng nhập tài khoản</h1>
+            <p class="mt-2 text-sm text-slate-500">Chào mừng bạn quay lại với Traveloka</p>
+        </div>
 
-        <!-- Validation Errors -->
+        <x-auth-session-status class="mb-4 text-center" :status="session('status')" />
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login') }}" class="space-y-5">
             @csrf
 
-            <!-- Email Address -->
             <div>
                 <x-label for="email" :value="__('Email')" />
-
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
-            <!-- Password -->
-            <div class="mt-4">
+            <div>
                 <x-label for="password" :value="__('Password')" />
-
                 <x-input id="password" class="block mt-1 w-full"
                                 type="password"
                                 name="password"
                                 required autocomplete="current-password" />
             </div>
 
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+            <div class="flex items-center justify-between">
+                <label for="remember_me" class="inline-flex items-center text-sm text-slate-500">
+                    <input id="remember_me" type="checkbox" class="rounded border-slate-300 text-sky-600 shadow-sm focus:ring-sky-200" name="remember">
+                    <span class="ml-2">{{ __('Remember me') }}</span>
                 </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                    <a class="text-sm font-semibold text-sky-600 hover:text-sky-500" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
+            </div>
 
-                <x-button class="ml-3">
+            <div class="pt-4">
+                <x-button class="w-full justify-center">
                     {{ __('Log in') }}
                 </x-button>
+
+                <p class="mt-4 text-center text-sm text-slate-500">
+                    {{ __('New to Traveloka?') }}
+                    <a class="font-semibold text-sky-600 hover:text-sky-500" href="{{ route('register') }}">
+                        {{ __('Create an account') }}
+                    </a>
+                </p>
             </div>
         </form>
     </x-auth-card>

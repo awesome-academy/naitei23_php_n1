@@ -1,3 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --traveloka-blue: #0b74de;
+    --traveloka-blue-dark: #0456a3;
+    --traveloka-sky: #e6f0ff;
+    --traveloka-orange: #ff8a00;
+    --traveloka-slate: #1f2a37;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: #f5f7fb;
+    color: var(--traveloka-slate);
+}
+
+.traveloka-gradient {
+    background: radial-gradient(circle at top, rgba(11, 116, 222, 0.15), transparent 55%),
+        radial-gradient(circle at 20% 20%, rgba(255, 138, 0, 0.12), transparent 45%),
+        linear-gradient(120deg, #f9fbff, #eef4ff);
+}
+
+.glass-card {
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.93);
+    box-shadow: 0 25px 55px rgba(8, 15, 52, 0.08);
+}
+
+.traveloka-input {
+    @apply border border-slate-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 rounded-xl text-slate-700 placeholder-slate-400;
+}
+
+.traveloka-button {
+    @apply inline-flex items-center justify-center px-5 py-3 rounded-xl font-semibold tracking-wide text-sm transition-all duration-200;
+}
