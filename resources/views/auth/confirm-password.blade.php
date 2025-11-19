@@ -6,17 +6,18 @@
             </a>
         </x-slot>
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+        <div class="mb-6 text-center">
+            <h1 class="text-2xl font-semibold text-slate-800">{{ __('Confirm your password') }}</h1>
+            <p class="mt-2 text-sm text-slate-500">
+                {{ __('For your security, please confirm your password to continue.') }}
+            </p>
         </div>
 
-        <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('password.confirm') }}">
+        <form method="POST" action="{{ route('password.confirm') }}" class="space-y-5">
             @csrf
 
-            <!-- Password -->
             <div>
                 <x-label for="password" :value="__('Password')" />
 
@@ -26,8 +27,8 @@
                                 required autocomplete="current-password" />
             </div>
 
-            <div class="flex justify-end mt-4">
-                <x-button>
+            <div class="pt-4">
+                <x-button class="w-full justify-center">
                     {{ __('Confirm') }}
                 </x-button>
             </div>

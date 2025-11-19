@@ -5,27 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <title>{{ config('app.name', 'Traveloka') }}</title>
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body class="font-sans antialiased bg-slate-50 traveloka-gradient min-h-screen">
+        <div class="min-h-screen bg-transparent">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+            <header class="bg-white/70 backdrop-blur border-b border-white/60 shadow-sm">
+                <div class="max-w-7xl mx-auto py-6 px-6 lg:px-10">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            {{ $header }}
+                        </div>
+                        <div class="hidden md:flex items-center gap-3">
+                            <span class="text-sm text-slate-500">{{ now()->format('d M Y') }}</span>
+                            <span class="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-600">
+                                <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
+                                Live
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </header>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="py-10 px-4 sm:px-6 lg:px-10">
+                <div class="max-w-7xl mx-auto">
+                    {{ $slot }}
+                </div>
             </main>
         </div>
     </body>
