@@ -60,14 +60,19 @@
                             </td>
                             <td>
                                 <div style="display: flex; gap: 8px; justify-content: center; align-items: center;">
-                                    <button class="btn btn-warning btn-sm btn-action" 
-                                            onclick="editTourSchedule(@json($schedule->id), @json($schedule->tour_id), @json($schedule->start_date->format('Y-m-d')), @json($schedule->end_date->format('Y-m-d')), @json($schedule->price), @json($schedule->max_participants))"
+                                    <button class="btn btn-warning btn-sm btn-action edit-schedule-btn" 
+                                            data-schedule-id="{{ $schedule->id }}"
+                                            data-schedule-tour-id="{{ $schedule->tour_id }}"
+                                            data-schedule-start-date="{{ $schedule->start_date->format('Y-m-d') }}"
+                                            data-schedule-end-date="{{ $schedule->end_date->format('Y-m-d') }}"
+                                            data-schedule-price="{{ $schedule->price }}"
+                                            data-schedule-max-participants="{{ $schedule->max_participants }}"
                                             title="{{ __('common.edit_schedule') }}">
                                         <i class="fas fa-edit"></i>
                                         <span>{{ __('common.edit') }}</span>
                                     </button>
-                                    <button class="btn btn-danger btn-sm btn-action" 
-                                            onclick="deleteTourSchedule({{ $schedule->id }})"
+                                    <button class="btn btn-danger btn-sm btn-action delete-schedule-btn" 
+                                            data-schedule-id="{{ $schedule->id }}"
                                             title="{{ __('common.delete') }}">
                                         <i class="fas fa-trash"></i>
                                         <span>{{ __('common.delete') }}</span>
@@ -108,42 +113,93 @@
         }
     }
 
+    // Edit Tour Schedule Button Handler
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle edit schedule buttons
+        document.querySelectorAll('.edit-schedule-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const scheduleId = this.getAttribute('data-schedule-id');
+                const tourId = this.getAttribute('data-schedule-tour-id');
+                const startDate = this.getAttribute('data-schedule-start-date');
+                const endDate = this.getAttribute('data-schedule-end-date');
+                const price = this.getAttribute('data-schedule-price');
+                const maxParticipants = this.getAttribute('data-schedule-max-participants');
+                
+                editTourSchedule(scheduleId, tourId, startDate, endDate, price, maxParticipants);
+            });
+        });
+
+        // Handle delete schedule buttons
+        document.querySelectorAll('.delete-schedule-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const scheduleId = this.getAttribute('data-schedule-id');
+                deleteTourSchedule(scheduleId);
+            });
+        });
+    });
+
     // Edit Tour Schedule
     function editTourSchedule(id, tourId, startDate, endDate, price, maxParticipants) {
         const modal = document.getElementById('editTourScheduleModal');
-        if (modal) {
-            modal.style.display = 'block';
-            document.getElementById('edit_schedule_id').value = id;
-            document.getElementById('edit_schedule_tour_id').value = tourId;
-            document.getElementById('edit_schedule_start_date').value = startDate;
-            document.getElementById('edit_schedule_end_date').value = endDate;
-            document.getElementById('edit_schedule_price').value = price;
-            document.getElementById('edit_schedule_max_participants').value = maxParticipants;
-            document.getElementById('editTourScheduleForm').action = `/admin/tour-schedules/${id}`;
+        if (!modal) {
+            console.error('Edit tour schedule modal not found');
+            alert(@json(__('common.error_loading_modal')));
+            return;
         }
+        
+        modal.style.display = 'block';
+        
+        const scheduleIdInput = document.getElementById('edit_schedule_id');
+        const tourIdInput = document.getElementById('edit_schedule_tour_id');
+        const startDateInput = document.getElementById('edit_schedule_start_date');
+        const endDateInput = document.getElementById('edit_schedule_end_date');
+        const priceInput = document.getElementById('edit_schedule_price');
+        const maxParticipantsInput = document.getElementById('edit_schedule_max_participants');
+        const form = document.getElementById('editTourScheduleForm');
+        
+        if (!scheduleIdInput || !tourIdInput || !startDateInput || !endDateInput || !priceInput || !maxParticipantsInput || !form) {
+            console.error('Required form elements not found');
+            return;
+        }
+        
+        scheduleIdInput.value = id || '';
+        tourIdInput.value = tourId || '';
+        startDateInput.value = startDate || '';
+        endDateInput.value = endDate || '';
+        priceInput.value = price || '';
+        maxParticipantsInput.value = maxParticipants || '';
+        form.action = `/admin/tour-schedules/${id}`;
     }
 
     // Delete Tour Schedule
     function deleteTourSchedule(id) {
-        if (confirm('{{ __('common.confirm_delete_schedule') }}')) {
+        if (!id) {
+            console.error('Schedule ID is missing');
+            return;
+        }
+        
+        const confirmMessage = @json(__('common.confirm_delete_schedule'));
+        if (confirm(confirmMessage)) {
             fetch(`/admin/tour-schedules/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
             .then(async response => {
+                const data = await response.json();
                 if (response.ok) {
                     window.location.reload();
                 } else {
-                    const data = await response.json();
-                    alert(data.message || '{{ __('common.cannot_delete_schedule_with_bookings') }}');
+                    const errorMessage = data.message || @json(__('common.cannot_delete_schedule_with_bookings'));
+                    alert(errorMessage);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('{{ __('common.cannot_delete_schedule_with_bookings') }}');
+                alert(@json(__('common.cannot_delete_schedule_with_bookings')));
             });
         }
     }

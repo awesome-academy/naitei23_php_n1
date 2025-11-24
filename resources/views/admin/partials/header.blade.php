@@ -35,15 +35,21 @@
                 <i class="fas fa-chevron-down" style="margin-left: 6px; font-size: 10px;"></i>
             </button>
             <div class="language-menu" id="adminLanguageMenu">
-                <a href="{{ route('locale.switch', 'en') }}" class="language-option {{ $currentLocale === 'en' ? 'active' : '' }}">
+                <a href="{{ route('locale.switch', 'en') }}" 
+                   role="menuitem"
+                   class="language-option {{ $currentLocale === 'en' ? 'active' : '' }}">
                     <img src="https://flagcdn.com/w20/us.png" alt="EN" style="width: 20px; height: 15px; object-fit: cover; border-radius: 2px; margin-right: 8px;">
                     <span>{{ __('common.english') }}</span>
                 </a>
-                <a href="{{ route('locale.switch', 'vi') }}" class="language-option {{ $currentLocale === 'vi' ? 'active' : '' }}">
+                <a href="{{ route('locale.switch', 'vi') }}" 
+                   role="menuitem"
+                   class="language-option {{ $currentLocale === 'vi' ? 'active' : '' }}">
                     <img src="https://flagcdn.com/w20/vn.png" alt="VI" style="width: 20px; height: 15px; object-fit: cover; border-radius: 2px; margin-right: 8px;">
                     <span>{{ __('common.vietnamese') }}</span>
                 </a>
-                <a href="{{ route('locale.switch', 'ja') }}" class="language-option {{ $currentLocale === 'ja' ? 'active' : '' }}">
+                <a href="{{ route('locale.switch', 'ja') }}" 
+                   role="menuitem"
+                   class="language-option {{ $currentLocale === 'ja' ? 'active' : '' }}">
                     <img src="https://flagcdn.com/w20/jp.png" alt="JA" style="width: 20px; height: 15px; object-fit: cover; border-radius: 2px; margin-right: 8px;">
                     <span>{{ __('common.japanese') }}</span>
                 </a>
