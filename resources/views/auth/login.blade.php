@@ -8,7 +8,7 @@
 
         <div class="mb-8 text-center">
             <h1 class="text-2xl font-semibold text-slate-800">{{ __('common.login') }}</h1>
-            <p class="mt-2 text-sm text-slate-500">{{ __('common.new_to_traveloka') }}</p>
+            <p class="mt-2 text-sm text-slate-500">{{ __('common.welcome_back_traveloka') }}</p>
         </div>
 
         <x-auth-session-status class="mb-4 text-center" :status="session('status')" />

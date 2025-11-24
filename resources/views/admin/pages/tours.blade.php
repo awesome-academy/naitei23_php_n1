@@ -64,14 +64,18 @@
                             </td>
                             <td>
                                 <div style="display: flex; gap: 8px; justify-content: center; align-items: center;">
-                                    <button class="btn btn-warning btn-sm btn-action" 
-                                            onclick="editTour(@json($tour->id), @json($tour->name), @json($tour->description ?? ''), @json($tour->location), @json($tour->image_url ?? ''))"
+                                    <button class="btn btn-warning btn-sm btn-action edit-tour-btn" 
+                                            data-tour-id="{{ $tour->id }}"
+                                            data-tour-name="{{ $tour->name }}"
+                                            data-tour-description="{{ $tour->description ?? '' }}"
+                                            data-tour-location="{{ $tour->location }}"
+                                            data-tour-image-url="{{ $tour->image_url ?? '' }}"
                                             title="{{ __('common.edit_tour') }}">
                                         <i class="fas fa-edit"></i>
                                         <span>{{ __('common.edit') }}</span>
                                     </button>
-                                    <button class="btn btn-danger btn-sm btn-action" 
-                                            onclick="deleteTour({{ $tour->id }})"
+                                    <button class="btn btn-danger btn-sm btn-action delete-tour-btn" 
+                                            data-tour-id="{{ $tour->id }}"
                                             title="{{ __('common.delete_tour') }}">
                                         <i class="fas fa-trash"></i>
                                         <span>{{ __('common.delete') }}</span>
@@ -112,18 +116,60 @@
         }
     }
 
+    // Edit Tour Button Handler
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle edit tour buttons
+        document.querySelectorAll('.edit-tour-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const tourId = this.getAttribute('data-tour-id');
+                const tourName = this.getAttribute('data-tour-name');
+                const tourDescription = this.getAttribute('data-tour-description');
+                const tourLocation = this.getAttribute('data-tour-location');
+                const tourImageUrl = this.getAttribute('data-tour-image-url');
+                
+                editTour(tourId, tourName, tourDescription, tourLocation, tourImageUrl);
+            });
+        });
+
+        // Handle delete tour buttons
+        document.querySelectorAll('.delete-tour-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const tourId = this.getAttribute('data-tour-id');
+                deleteTour(tourId);
+            });
+        });
+    });
+
     // Edit Tour
     function editTour(id, name, description, location, imageUrl) {
         const modal = document.getElementById('editTourModal');
-        if (modal) {
-            modal.style.display = 'block';
-            document.getElementById('edit_tour_id').value = id;
-            document.getElementById('edit_tour_name').value = name || '';
-            document.getElementById('edit_tour_description').value = description || '';
-            document.getElementById('edit_tour_location').value = location || '';
-            document.getElementById('editTourForm').action = `/admin/tours/${id}`;
-            
-            const img = document.getElementById('edit_tour_current_image');
+        if (!modal) {
+            console.error('Edit tour modal not found');
+            alert(@json(__('common.error_loading_modal')));
+            return;
+        }
+        
+        modal.style.display = 'block';
+        
+        const tourIdInput = document.getElementById('edit_tour_id');
+        const nameInput = document.getElementById('edit_tour_name');
+        const descriptionInput = document.getElementById('edit_tour_description');
+        const locationInput = document.getElementById('edit_tour_location');
+        const form = document.getElementById('editTourForm');
+        
+        if (!tourIdInput || !nameInput || !descriptionInput || !locationInput || !form) {
+            console.error('Required form elements not found');
+            return;
+        }
+        
+        tourIdInput.value = id || '';
+        nameInput.value = name || '';
+        descriptionInput.value = description || '';
+        locationInput.value = location || '';
+        form.action = `/admin/tours/${id}`;
+        
+        const img = document.getElementById('edit_tour_current_image');
+        if (img) {
             if (imageUrl && imageUrl !== '' && imageUrl !== 'null') {
                 img.src = `/${imageUrl}`;
                 img.style.display = 'block';
@@ -135,25 +181,33 @@
 
     // Delete Tour
     function deleteTour(id) {
-        if (confirm('{{ __('common.confirm_delete_tour') }}')) {
+        if (!id) {
+            console.error('Tour ID is missing');
+            return;
+        }
+        
+        const confirmMessage = @json(__('common.confirm_delete_tour'));
+        if (confirm(confirmMessage)) {
             fetch(`/admin/tours/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }
             })
             .then(async response => {
+                const data = await response.json();
                 if (response.ok) {
                     window.location.reload();
                 } else {
-                    const data = await response.json();
-                    alert(data.message || '{{ __('common.cannot_delete_tour_with_schedules') }}');
+                    const errorMessage = data.message || @json(__('common.cannot_delete_tour_with_schedules'));
+                    alert(errorMessage);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('{{ __('common.cannot_delete_tour_with_schedules') }}');
+                alert(@json(__('common.cannot_delete_tour_with_schedules')));
             });
         }
     }

@@ -7,30 +7,136 @@ use App\Http\Requests\StoreTourRequest;
 use App\Http\Requests\UpdateTourRequest;
 use App\Http\Requests\StoreTourScheduleRequest;
 use App\Http\Requests\UpdateTourScheduleRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Booking;
 use App\Models\Comment;
 use App\Models\Payment;
 use App\Models\Review;
+use App\Models\Role;
 use App\Models\Tour;
 use App\Models\TourSchedule;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class AdminManagementController extends Controller
 {
     private const TOUR_IMAGE_DIR = 'images/tours';
-    public function users()
-    {
-        $users = User::with('roles')
-            ->latest()
-            ->paginate(12);
 
-        return view('admin.pages.users', compact('users'));
+    /**
+     * Display a listing of users with search and filter
+     */
+    public function users(Request $request)
+    {
+        $query = $request->input('query');
+        $roleId = $request->input('role_id');
+
+        $usersQuery = User::with('roles');
+
+        // Search filter (name or email)
+        if (!empty($query)) {
+            // Escape LIKE wildcards to prevent LIKE injection
+            $escapeLike = function ($value) {
+                return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $value);
+            };
+            $escapedQuery = $escapeLike($query);
+            
+            $usersQuery->where(function($q) use ($escapedQuery) {
+                $q->whereRaw("name LIKE ? ESCAPE '\\'", ["%{$escapedQuery}%"])
+                  ->orWhereRaw("email LIKE ? ESCAPE '\\'", ["%{$escapedQuery}%"]);
+            });
+        }
+
+        // Role filter
+        if (!empty($roleId) && $roleId !== 'all') {
+            $usersQuery->whereHas('roles', function($q) use ($roleId) {
+                $q->where('roles.id', $roleId);
+            });
+        }
+
+        $users = $usersQuery->latest()->paginate(12);
+        $roles = Role::all();
+
+        // Keep search parameters in pagination links
+        $users->appends($request->only(['query', 'role_id']));
+
+        // If AJAX request, return only the table content
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'table_html' => view('admin.pages.users-table', compact('users'))->render(),
+                'pagination_html' => view('admin.pages.users-pagination', compact('users'))->render(),
+            ]);
+        }
+
+        return view('admin.pages.users', compact('users', 'roles'));
     }
 
     /**
-     * Quản lý Tours (thông tin chung)
+     * Store a newly created user
+     */
+    public function storeUser(StoreUserRequest $request)
+    {
+        $validated = $request->validated();
+        $roleIds = $validated['role_ids'];
+        unset($validated['role_ids']);
+
+        // Hash password
+        $validated['password'] = Hash::make($validated['password']);
+
+        $user = User::create($validated);
+        $user->roles()->attach($roleIds);
+
+        return redirect()->route('admin.users')->with('success', __('common.user_created_successfully'));
+    }
+
+    /**
+     * Update the specified user
+     */
+    public function updateUser(UpdateUserRequest $request, User $user)
+    {
+        $validated = $request->validated();
+        $roleIds = $validated['role_ids'];
+        unset($validated['role_ids']);
+
+        // Only update password if provided
+        if ($request->filled('password')) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+
+        $user->update($validated);
+        $user->roles()->sync($roleIds);
+
+        return redirect()->route('admin.users')->with('success', __('common.user_updated_successfully'));
+    }
+
+    /**
+     * Remove the specified user
+     */
+    public function deleteUser(User $user)
+    {
+        // Prevent deletion of current logged in user
+        if ($user->id === auth()->id()) {
+            return response()->json([
+                'success' => false,
+                'message' => __('common.cannot_delete_own_account')
+            ], 403);
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => __('common.user_deleted_successfully')
+        ]);
+    }
+
+    /**
+     * Manage Tours (general information)
      */
     public function tours()
     {
@@ -48,11 +154,11 @@ class AdminManagementController extends Controller
         $imagePath = null;
 
         if ($request->hasFile('image')) {
-            // Validation đã được xử lý trong StoreTourRequest
+            // Validation is already handled in StoreTourRequest
             $image = $request->file('image');
             $extension = $image->guessExtension();
 
-            // Tạo thư mục nếu chưa tồn tại
+            // Create directory if it doesn't exist
             $imageDir = public_path(self::TOUR_IMAGE_DIR);
             if (!File::exists($imageDir)) {
                 File::makeDirectory($imageDir, 0755, true);
@@ -74,16 +180,16 @@ class AdminManagementController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('image')) {
-            // Xóa image cũ nếu có
+            // Delete old image file if it exists
             if ($tour->image_url && File::exists(public_path($tour->image_url))) {
                 File::delete(public_path($tour->image_url));
             }
 
-            // Validation đã được xử lý trong UpdateTourRequest
+            // Validation is already handled in UpdateTourRequest
             $image = $request->file('image');
             $extension = $image->guessExtension();
 
-            // Tạo thư mục nếu chưa tồn tại
+            // Create directory if it doesn't exist
             $imageDir = public_path(self::TOUR_IMAGE_DIR);
             if (!File::exists($imageDir)) {
                 File::makeDirectory($imageDir, 0755, true);
@@ -109,7 +215,7 @@ class AdminManagementController extends Controller
                 ], 400);
             }
 
-        // Xóa image file nếu có
+        // Delete image file if it exists
         if ($tour->image_url && File::exists(public_path($tour->image_url))) {
             File::delete(public_path($tour->image_url));
         }
@@ -120,7 +226,7 @@ class AdminManagementController extends Controller
     }
 
     /**
-     * Quản lý Tour Schedules (lịch trình cụ thể)
+     * Manage Tour Schedules (specific schedules)
      */
     public function tourSchedules()
     {

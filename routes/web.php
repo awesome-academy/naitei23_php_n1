@@ -36,6 +36,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('dashboard/stats', [AdminDashboardController::class, 'stats'])->name('dashboard.stats');
 
         Route::get('users', [AdminManagementController::class, 'users'])->name('users');
+        Route::post('users', [AdminManagementController::class, 'storeUser'])->name('users.store');
+        Route::put('users/{user}', [AdminManagementController::class, 'updateUser'])->name('users.update');
+        Route::delete('users/{user}', [AdminManagementController::class, 'deleteUser'])->name('users.delete');
         
         // Tours CRUD (thông tin chung)
         Route::get('tours', [AdminManagementController::class, 'tours'])->name('tours');

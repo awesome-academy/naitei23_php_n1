@@ -39,7 +39,7 @@
                             aria-haspopup="true"
                             aria-expanded="false"
                             aria-label="{{ __('common.change_language') }}">
-                        <img src="{{ $currentFlag }}" alt="{{ strtoupper($currentLocale) }}" class="w-5 h-4 object-cover rounded" style="border: 1px solid #e5e7eb;">
+                        <img src="{{ $currentFlag }}" alt="{{ strtoupper($currentLocale) }}" width="20" height="15" class="w-5 h-4 object-cover rounded" style="border: 1px solid #e5e7eb;">
                         <span class="text-sm font-medium">{{ strtoupper($currentLocale) }}</span>
                         <i class="fas fa-chevron-down text-xs"></i>
                     </button>
@@ -48,18 +48,21 @@
                          role="menu"
                          aria-orientation="vertical">
                         <a href="{{ route('locale.switch', 'en') }}" 
+                           role="menuitem"
                            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ $currentLocale === 'en' ? 'bg-orange-50 text-orange-600' : '' }}">
-                            <img src="https://flagcdn.com/w20/us.png" alt="EN" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
+                            <img src="https://flagcdn.com/w20/us.png" alt="EN" width="20" height="15" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
                             <span>{{ __('common.english') }}</span>
                         </a>
                         <a href="{{ route('locale.switch', 'vi') }}" 
+                           role="menuitem"
                            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ $currentLocale === 'vi' ? 'bg-orange-50 text-orange-600' : '' }}">
-                            <img src="https://flagcdn.com/w20/vn.png" alt="VI" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
+                            <img src="https://flagcdn.com/w20/vn.png" alt="VI" width="20" height="15" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
                             <span>{{ __('common.vietnamese') }}</span>
                         </a>
                         <a href="{{ route('locale.switch', 'ja') }}" 
+                           role="menuitem"
                            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ $currentLocale === 'ja' ? 'bg-orange-50 text-orange-600' : '' }}">
-                            <img src="https://flagcdn.com/w20/jp.png" alt="JA" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
+                            <img src="https://flagcdn.com/w20/jp.png" alt="JA" width="20" height="15" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
                             <span>{{ __('common.japanese') }}</span>
                         </a>
                     </div>

@@ -7,8 +7,8 @@
         </x-slot>
 
         <div class="mb-8 text-center">
-            <h1 class="text-2xl font-semibold text-slate-800">{{ __('common.create_account') }}</h1>
-            <p class="mt-2 text-sm text-slate-500">{{ __('common.new_to_traveloka') }}</p>
+            <h1 class="text-2xl font-semibold text-slate-800">{{ __('common.create_traveloka_account') }}</h1>
+            <p class="mt-2 text-sm text-slate-500">{{ __('common.just_a_few_steps') }}</p>
         </div>
 
         <x-auth-validation-errors class="mb-4" :errors="$errors" />

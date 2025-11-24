@@ -13,7 +13,7 @@
             </div>
             <div class="form-group">
                 <label>{{ __('common.slug') }}</label>
-                <input type="text" name="slug" class="form-control" placeholder="{{ __('common.auto_generated_if_empty') }}">
+                <input type="text" name="slug" class="form-control" placeholder="{{ __('common.auto_generate_from_name') }}">
             </div>
             <div class="form-group">
                 <label>{{ __('common.description') }}</label>
@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label>{{ __('common.slug') }}</label>
-                <input type="text" name="slug" id="edit_tour_slug" class="form-control" placeholder="{{ __('common.auto_generated_if_empty') }}">
+                <input type="text" name="slug" id="edit_tour_slug" class="form-control" placeholder="{{ __('common.auto_generate_from_name') }}">
             </div>
             <div class="form-group">
                 <label>{{ __('common.description') }}</label>
