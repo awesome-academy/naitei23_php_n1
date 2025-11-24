@@ -4,27 +4,27 @@
 
 @extends('admin.layouts.app')
 
-@section('page-title', 'Đánh giá tour')
+@section('page-title', __('common.reviews'))
 
 @section('content')
     <div class="table-wrapper">
         <div class="table-head">
-            <div class="table-title">Tất cả đánh giá</div>
+            <div class="table-title">{{ __('common.all_reviews') }}</div>
         </div>
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>Khách hàng</th>
-                    <th>Tour</th>
-                    <th>Rating</th>
-                    <th>Nội dung</th>
-                    <th>Ngày</th>
+                    <th>{{ __('common.customer') }}</th>
+                    <th>{{ __('common.tour') }}</th>
+                    <th>{{ __('common.rating') }}</th>
+                    <th>{{ __('common.review_content') }}</th>
+                    <th>{{ __('common.review_date') }}</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($reviews as $review)
                     <tr>
-                        <td>{{ $review->user->name ?? 'Ẩn danh' }}</td>
+                        <td>{{ $review->user->name ?? __('common.anonymous') }}</td>
                         <td>{{ $review->tour->name ?? '-' }}</td>
                         <td>
                             <span class="chip">{{ $review->rating }}/5</span>
@@ -34,7 +34,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="empty-state">Chưa có đánh giá</td>
+                        <td colspan="5" class="empty-state">{{ __('common.no_reviews') }}</td>
                     </tr>
                 @endforelse
             </tbody>

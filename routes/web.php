@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminManagementController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,9 +60,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Customer routes
-Route::get('/categories', [\App\Http\Controllers\CustomerController::class, 'categories'])->name('customer.categories');
-Route::get('/tours/{tour}', [\App\Http\Controllers\CustomerController::class, 'tours'])->name('customer.tours');
+// Customer routes (public with rate limiting)
+Route::get('/categories', [\App\Http\Controllers\CustomerController::class, 'categories'])
+    ->middleware('throttle:60,1')
+    ->name('customer.categories');
+Route::get('/tours/{tour}', [\App\Http\Controllers\CustomerController::class, 'tours'])
+    ->middleware('throttle:60,1')
+    ->name('customer.tours');
+
+Route::get('locale/{locale}', [LanguageController::class, 'changeLanguage'])->name('locale.switch');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

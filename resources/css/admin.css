@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import './modal.css';
 
 :root {
     --traveloka-blue: #0b74de;
@@ -192,6 +193,68 @@ a {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+}
+
+.language-switcher {
+    position: relative;
+    margin-right: 12px;
+}
+
+.language-toggle {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #fff;
+    border: 1px solid var(--traveloka-border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--traveloka-text);
+    transition: all 0.2s ease;
+    gap: 6px;
+}
+
+.language-toggle:hover {
+    background: var(--traveloka-blue-light);
+    border-color: var(--traveloka-blue);
+}
+
+.language-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 180px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+    padding: 8px 0;
+    border: 1px solid var(--traveloka-border);
+    z-index: 100;
+    display: none;
+}
+
+.language-menu.show {
+    display: block;
+}
+
+.language-option {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    color: var(--traveloka-text);
+    text-decoration: none;
+    transition: background 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.language-option:hover {
+    background: var(--traveloka-blue-light);
+}
+
+.language-option.active {
+    background: var(--traveloka-blue-light);
+    color: var(--traveloka-blue);
+    font-weight: 600;
 }
 
 .user-menu button {

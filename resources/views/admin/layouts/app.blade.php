@@ -19,7 +19,7 @@
 
             <div class="admin-main">
                 @include('admin.partials.header', [
-                    'pageTitle' => trim($__env->yieldContent('page-title')) ?: 'Bảng điều khiển',
+                    'pageTitle' => trim($__env->yieldContent('page-title')) ?: __('common.admin_dashboard'),
                 ])
 
                 <main class="admin-content" @if($isDashboard) data-dashboard-stats="true" @endif>

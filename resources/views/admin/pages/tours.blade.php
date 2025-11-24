@@ -4,12 +4,12 @@
 
 @extends('admin.layouts.app')
 
-@section('page-title', 'Danh sách tour')
+@section('page-title', __('common.tour_list'))
 
 @section('content')
     <div style="margin-bottom: 20px;">
         <button class="btn btn-primary" onclick="openTourModal()">
-            <i class="fas fa-plus"></i> Thêm tour mới
+            <i class="fas fa-plus"></i> {{ __('common.add_new_tour') }}
         </button>
     </div>
 
@@ -21,19 +21,19 @@
 
     <div class="table-wrapper">
         <div class="table-head">
-            <div class="table-title">Tour hiện có</div>
+            <div class="table-title">{{ __('common.tour_list') }}</div>
         </div>
         <div style="overflow-x: auto;">
             <table class="admin-table">
                 <thead>
                     <tr>
                         <th style="width: 60px; text-align: center;">#</th>
-                        <th style="width: 100px; text-align: center;">Hình ảnh</th>
-                        <th style="min-width: 250px;">Tour</th>
-                        <th style="width: 180px;">Địa điểm</th>
-                        <th style="width: 120px; text-align: center;">Lịch trình</th>
-                        <th style="width: 100px; text-align: center;">Đánh giá</th>
-                        <th style="width: 160px; text-align: center;">Thao tác</th>
+                        <th style="width: 100px; text-align: center;">{{ __('common.image') }}</th>
+                        <th style="min-width: 200px;">{{ __('common.tour') }}</th>
+                        <th style="width: 140px;">{{ __('common.location') }}</th>
+                        <th style="width: 120px; text-align: center;">{{ __('common.schedules') }}</th>
+                        <th style="width: 100px; text-align: center;">{{ __('common.rating') }}</th>
+                        <th style="width: 160px; text-align: center;">{{ __('common.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,10 +50,12 @@
                             </td>
                             <td>
                                 <strong style="display: block; margin-bottom: 4px;">{{ $tour->name }}</strong>
-                                <small style="color: var(--traveloka-muted); line-height: 1.4;">{{ Str::limit($tour->description ?? '', 70) }}</small>
+                                <small style="color: var(--traveloka-muted); line-height: 1.4;">{{ Str::limit($tour->description ?? '', 60) }}</small>
                             </td>
-                            <td>{{ $tour->location }}</td>
-                            <td style="text-align: center;">{{ $tour->schedules_count }} lịch</td>
+                            <td>
+                                <span style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $tour->location }}</span>
+                            </td>
+                            <td style="text-align: center;">{{ $tour->schedules_count }} {{ __('common.schedules') }}</td>
                             <td style="text-align: center;">
                                 <span style="display: inline-flex; align-items: center; gap: 4px; color: var(--traveloka-orange); font-weight: 600;">
                                     <i class="fas fa-star"></i>
@@ -63,23 +65,23 @@
                             <td>
                                 <div style="display: flex; gap: 8px; justify-content: center; align-items: center;">
                                     <button class="btn btn-warning btn-sm btn-action" 
-                                            onclick="editTour({{ $tour->id }}, '{{ addslashes($tour->name) }}', '{{ addslashes($tour->description ?? '') }}', '{{ addslashes($tour->location) }}', '{{ $tour->image_url ?? '' }}')"
-                                            title="Sửa tour">
+                                            onclick="editTour(@json($tour->id), @json($tour->name), @json($tour->description ?? ''), @json($tour->location), @json($tour->image_url ?? ''))"
+                                            title="{{ __('common.edit_tour') }}">
                                         <i class="fas fa-edit"></i>
-                                        <span>Sửa</span>
+                                        <span>{{ __('common.edit') }}</span>
                                     </button>
                                     <button class="btn btn-danger btn-sm btn-action" 
                                             onclick="deleteTour({{ $tour->id }})"
-                                            title="Xóa tour">
+                                            title="{{ __('common.delete_tour') }}">
                                         <i class="fas fa-trash"></i>
-                                        <span>Xóa</span>
+                                        <span>{{ __('common.delete') }}</span>
                                     </button>
                                 </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="empty-state">Chưa có tour nào</td>
+                            <td colspan="7" class="empty-state">{{ __('common.no_tours_found') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -133,7 +135,7 @@
 
     // Delete Tour
     function deleteTour(id) {
-        if (confirm('Bạn có chắc chắn muốn xóa tour này?')) {
+        if (confirm('{{ __('common.confirm_delete_tour') }}')) {
             fetch(`/admin/tours/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -146,12 +148,12 @@
                     window.location.reload();
                 } else {
                     const data = await response.json();
-                    alert(data.message || 'Không thể xóa tour này.');
+                    alert(data.message || '{{ __('common.cannot_delete_tour_with_schedules') }}');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Có lỗi xảy ra khi xóa tour.');
+                alert('{{ __('common.cannot_delete_tour_with_schedules') }}');
             });
         }
     }

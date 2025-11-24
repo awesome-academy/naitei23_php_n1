@@ -1,0 +1,180 @@
+<?php
+
+return [
+    // Language
+    'language' => '言語',
+    'change_language' => '言語を変更',
+    'english' => '英語',
+    'vietnamese' => 'ベトナム語',
+    'japanese' => '日本語',
+    
+    // Brand & General
+    'traveloka_admin' => 'Traveloka Admin',
+    'super_admin' => 'スーパー管理者',
+    'brand' => 'Traveloka Tour',
+    'home' => 'ホーム',
+    
+    // Navigation
+    'tour_categories' => 'ツアーカテゴリー',
+    'about_us' => '私たちについて',
+    'contact' => 'お問い合わせ',
+    'admin_dashboard' => 'ダッシュボード',
+    'logout' => 'ログアウト',
+    'profile' => 'プロフィール',
+    'login' => 'ログイン',
+    'register' => '登録',
+    
+    // Admin Sidebar
+    'dashboard' => 'ダッシュボード',
+    'users' => 'ユーザー',
+    'tours' => 'ツアー',
+    'tour_schedules' => 'ツアースケジュール',
+    'bookings' => '予約',
+    'payments' => '支払い',
+    'reviews' => 'レビュー',
+    'comments' => 'コメント',
+    
+    // Admin Pages
+    'tour_list' => 'ツアーリスト',
+    'add_new_tour' => '新しいツアーを追加',
+    'edit_tour' => 'ツアーを編集',
+    'delete_tour' => 'ツアーを削除',
+    'tour_name' => 'ツアー名',
+    'slug' => 'スラッグ',
+    'description' => '説明',
+    'location' => '場所',
+    'image' => '画像',
+    'current_image' => '現在の画像',
+    'new_image' => '新しい画像',
+    'schedules' => 'スケジュール',
+    'rating' => '評価',
+    'actions' => '操作',
+    'edit' => '編集',
+    'delete' => '削除',
+    'cancel' => 'キャンセル',
+    'save' => '保存',
+    'update' => '更新',
+    'add' => '追加',
+    'submit' => '送信',
+    'close' => '閉じる',
+    
+    // Tour Schedule
+    'add_new_schedule' => '新しいスケジュールを追加',
+    'edit_schedule' => 'スケジュールを編集',
+    'select_tour' => 'ツアーを選択',
+    'departure_date' => '出発日',
+    'end_date' => '終了日',
+    'price' => '価格',
+    'max_participants' => '最大参加者数',
+    'max' => '最大',
+    'participants' => '参加者',
+    'people' => '人',
+    'days' => '日',
+    'vnd' => 'VND',
+    
+    // Bookings
+    'booking_list' => '予約リスト',
+    'booking_code' => 'コード',
+    'customer' => '顧客',
+    'tour' => 'ツアー',
+    'num_participants' => '参加者数',
+    'total_price' => '合計金額',
+    'status' => 'ステータス',
+    'created_date' => '作成日',
+    'anonymous' => '匿名',
+    'no_bookings' => '予約がありません',
+    
+    // Payments
+    'payment_history' => '支払い履歴',
+    'transaction_id' => '取引ID',
+    'booking' => '予約',
+    'amount' => '金額',
+    'payment_method' => '支払い方法',
+    'payment_date' => '支払い日',
+    'no_payments' => '支払いがありません',
+    
+    // Reviews
+    'all_reviews' => 'すべてのレビュー',
+    'review_content' => '内容',
+    'review_date' => '日付',
+    'no_reviews' => 'レビューがありません',
+    
+    // Comments
+    'recent_comments' => '最近のコメント',
+    'user' => 'ユーザー',
+    'object' => 'オブジェクト',
+    'content' => '内容',
+    'date' => '日付',
+    'no_comments' => 'コメントがありません',
+    
+    // Users
+    'user_management' => 'ユーザー管理',
+    'user_list' => 'ユーザーリスト',
+    'total_accounts' => '合計',
+    'search_by_name_or_email' => '名前またはメールで検索...',
+    'user_info' => '情報',
+    'role' => '役割',
+    'email_verified' => 'メール確認済み',
+    'verified' => '確認済み',
+    'not_verified' => '未確認',
+    'not_assigned' => '未割り当て',
+    'no_users' => 'ユーザーがありません',
+    
+    // Status
+    'pending' => '保留中',
+    'confirmed' => '確認済み',
+    'completed' => '完了',
+    'cancelled' => 'キャンセル済み',
+    'success' => '成功',
+    'failed' => '失敗',
+    
+    // Dashboard
+    'recent_bookings' => '最近の予約',
+    'top_tours_by_rating' => '評価別トップツアー',
+    'latest_reviews' => '最新のレビュー',
+    'realtime_update' => 'リアルタイム更新',
+    'no_data' => 'データがありません',
+    'no_tours_found' => 'ツアーが見つかりません',
+    'no_schedules_found' => 'スケジュールが見つかりません',
+    
+    // Customer Pages
+    'view_schedules' => 'スケジュールを見る',
+    'showing' => '表示中',
+    'of' => 'の',
+    'book_now' => '今すぐ予約',
+    'back_to_tour_list' => 'ツアーリストに戻る',
+    'no_schedules_for_tour' => 'このツアーのスケジュールが見つかりません',
+    
+    // Auth
+    'admin_login' => '管理者ログイン',
+    'please_login_with_admin_account' => '管理者権限のあるアカウントでログインしてください',
+    'email' => 'メール',
+    'password' => 'パスワード',
+    'remember_me' => 'ログイン状態を保持',
+    'back_to_home' => 'ホームに戻る',
+    'forgot_password' => 'パスワードをお忘れですか？',
+    'create_account' => 'アカウントを作成',
+    'already_registered' => 'すでに登録済みですか？',
+    'new_to_traveloka' => 'Travelokaへようこそ',
+    
+    // Messages
+    'tour_added_successfully' => 'ツアーが正常に追加されました',
+    'tour_updated_successfully' => 'ツアーが正常に更新されました',
+    'tour_deleted_successfully' => 'ツアーが正常に削除されました',
+    'cannot_delete_tour_with_schedules' => '関連するスケジュールがあるツアーは削除できません',
+    'schedule_added_successfully' => 'スケジュールが正常に追加されました',
+    'schedule_updated_successfully' => 'スケジュールが正常に更新されました',
+    'schedule_deleted_successfully' => 'スケジュールが正常に削除されました',
+    'cannot_delete_schedule_with_bookings' => '関連する予約があるスケジュールは削除できません',
+    'confirm_delete' => '削除してもよろしいですか？',
+    'confirm_delete_tour' => 'このツアーを削除してもよろしいですか？',
+    'confirm_delete_schedule' => 'このスケジュールを削除してもよろしいですか？',
+    
+    // Form Placeholders
+    'auto_generate_from_name' => '名前から自動生成（空欄の場合）',
+    'example_price' => '例: 5000000',
+    'example_participants' => '例: 20',
+    
+    // Other
+    'stay_inspired' => 'Stay inspired',
+];

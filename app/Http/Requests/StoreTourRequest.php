@@ -36,7 +36,7 @@ class StoreTourRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        if ($this->has('name') && !$this->has('slug')) {
+        if ($this->has('name') && !$this->filled('slug')) {
             $this->merge([
                 'slug' => Str::slug($this->name) . '-' . time(),
             ]);

@@ -1,20 +1,20 @@
 @extends('admin.layouts.app')
 
-@section('page-title', 'Quản lý người dùng')
+@section('page-title', __('common.user_management'))
 
 @section('content')
     <div class="table-wrapper">
         <div class="table-head">
             <div>
-                <div class="table-title">Danh sách người dùng</div>
+                <div class="table-title">{{ __('common.user_list') }}</div>
                 <small style="color: var(--traveloka-muted);">
-                    Tổng cộng {{ number_format($users->total()) }} tài khoản
+                    {{ __('common.total_accounts') }} {{ number_format($users->total()) }} {{ __('common.users') }}
                 </small>
             </div>
             <div style="display: flex; gap: 12px;">
                 <input
                     type="search"
-                    placeholder="Tìm theo tên hoặc email..."
+                    placeholder="{{ __('common.search_by_name_or_email') }}"
                     class="search-input"
                     data-table-search="#users-table"
                     style="min-width: 240px;"
@@ -26,10 +26,10 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Thông tin</th>
-                    <th>Vai trò</th>
-                    <th>Email xác thực</th>
-                    <th>Ngày tạo</th>
+                    <th>{{ __('common.user_info') }}</th>
+                    <th>{{ __('common.role') }}</th>
+                    <th>{{ __('common.email_verified') }}</th>
+                    <th>{{ __('common.created_date') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,21 +45,21 @@
                                 <span class="chip" style="margin-right: 4px;">{{ $role->name }}</span>
                             @endforeach
                             @if ($user->roles->isEmpty())
-                                <span class="status-badge status-pending">Chưa gán</span>
+                                <span class="status-badge status-pending">{{ __('common.not_assigned') }}</span>
                             @endif
                         </td>
                         <td>
                             @if ($user->email_verified_at)
-                                <span class="status-badge status-success">Đã xác thực</span>
+                                <span class="status-badge status-success">{{ __('common.verified') }}</span>
                             @else
-                                <span class="status-badge status-pending">Chưa xác thực</span>
+                                <span class="status-badge status-pending">{{ __('common.not_verified') }}</span>
                             @endif
                         </td>
                         <td>{{ optional($user->created_at)->format('d/m/Y') }}</td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="empty-state">Chưa có người dùng</td>
+                        <td colspan="5" class="empty-state">{{ __('common.no_users') }}</td>
                     </tr>
                 @endforelse
             </tbody>

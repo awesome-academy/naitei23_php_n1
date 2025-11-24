@@ -1,11 +1,11 @@
 @extends('admin.layouts.app')
 
-@section('page-title', 'Lịch trình Tour')
+@section('page-title', __('common.tour_schedules'))
 
 @section('content')
     <div style="margin-bottom: 20px;">
         <button class="btn btn-primary" onclick="openTourScheduleModal()">
-            <i class="fas fa-plus"></i> Thêm lịch trình mới
+            <i class="fas fa-plus"></i> {{ __('common.add_new_schedule') }}
         </button>
     </div>
 
@@ -17,20 +17,20 @@
 
     <div class="table-wrapper">
         <div class="table-head">
-            <div class="table-title">Lịch trình Tour hiện có</div>
+            <div class="table-title">{{ __('common.tour_schedules') }}</div>
         </div>
         <div style="overflow-x: auto;">
             <table class="admin-table">
                 <thead>
                     <tr>
                         <th style="width: 60px; text-align: center;">#</th>
-                        <th style="min-width: 200px;">Tour</th>
-                        <th style="width: 140px; text-align: center;">Ngày khởi hành</th>
-                        <th style="width: 140px; text-align: center;">Ngày kết thúc</th>
-                        <th style="width: 120px; text-align: right;">Giá</th>
-                        <th style="width: 100px; text-align: center;">Số người</th>
-                        <th style="width: 100px; text-align: center;">Booking</th>
-                        <th style="width: 160px; text-align: center;">Thao tác</th>
+                        <th style="min-width: 200px;">{{ __('common.tour') }}</th>
+                        <th style="width: 140px; text-align: center;">{{ __('common.departure_date') }}</th>
+                        <th style="width: 140px; text-align: center;">{{ __('common.end_date') }}</th>
+                        <th style="width: 120px; text-align: right;">{{ __('common.price') }}</th>
+                        <th style="width: 100px; text-align: center;">{{ __('common.participants') }}</th>
+                        <th style="width: 100px; text-align: center;">{{ __('common.booking') }}</th>
+                        <th style="width: 160px; text-align: center;">{{ __('common.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,10 +48,10 @@
                                 {{ $schedule->end_date->format('d/m/Y') }}
                             </td>
                             <td style="text-align: right; font-weight: 600; color: var(--traveloka-orange);">
-                                {{ number_format($schedule->price, 0, '.', ',') }} VNĐ
+                                {{ number_format($schedule->price, 0, '.', ',') }} {{ __('common.vnd') }}
                             </td>
                             <td style="text-align: center;">
-                                {{ $schedule->max_participants }} người
+                                {{ $schedule->max_participants }} {{ __('common.people') }}
                             </td>
                             <td style="text-align: center;">
                                 <span class="status-badge status-{{ $schedule->bookings_count > 0 ? 'success' : 'pending' }}">
@@ -61,23 +61,23 @@
                             <td>
                                 <div style="display: flex; gap: 8px; justify-content: center; align-items: center;">
                                     <button class="btn btn-warning btn-sm btn-action" 
-                                            onclick="editTourSchedule({{ $schedule->id }}, {{ $schedule->tour_id }}, '{{ $schedule->start_date->format('Y-m-d') }}', '{{ $schedule->end_date->format('Y-m-d') }}', {{ $schedule->price }}, {{ $schedule->max_participants }})"
-                                            title="Sửa lịch trình">
+                                            onclick="editTourSchedule(@json($schedule->id), @json($schedule->tour_id), @json($schedule->start_date->format('Y-m-d')), @json($schedule->end_date->format('Y-m-d')), @json($schedule->price), @json($schedule->max_participants))"
+                                            title="{{ __('common.edit_schedule') }}">
                                         <i class="fas fa-edit"></i>
-                                        <span>Sửa</span>
+                                        <span>{{ __('common.edit') }}</span>
                                     </button>
                                     <button class="btn btn-danger btn-sm btn-action" 
                                             onclick="deleteTourSchedule({{ $schedule->id }})"
-                                            title="Xóa lịch trình">
+                                            title="{{ __('common.delete') }}">
                                         <i class="fas fa-trash"></i>
-                                        <span>Xóa</span>
+                                        <span>{{ __('common.delete') }}</span>
                                     </button>
                                 </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="empty-state">Chưa có lịch trình nào</td>
+                            <td colspan="8" class="empty-state">{{ __('common.no_schedules_found') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -125,7 +125,7 @@
 
     // Delete Tour Schedule
     function deleteTourSchedule(id) {
-        if (confirm('Bạn có chắc chắn muốn xóa lịch trình này?')) {
+        if (confirm('{{ __('common.confirm_delete_schedule') }}')) {
             fetch(`/admin/tour-schedules/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -138,12 +138,12 @@
                     window.location.reload();
                 } else {
                     const data = await response.json();
-                    alert(data.message || 'Không thể xóa lịch trình này.');
+                    alert(data.message || '{{ __('common.cannot_delete_schedule_with_bookings') }}');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Có lỗi xảy ra khi xóa lịch trình.');
+                alert('{{ __('common.cannot_delete_schedule_with_bookings') }}');
             });
         }
     }

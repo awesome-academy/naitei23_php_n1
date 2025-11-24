@@ -23,7 +23,7 @@ class UpdateTourScheduleRequest extends FormRequest
     {
         return [
             'tour_id' => 'required|exists:tours,id',
-            'start_date' => 'required|date',
+            'start_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date|after:start_date',
             'price' => 'required|numeric|min:0',
             'max_participants' => 'required|integer|min:1',
