@@ -211,6 +211,13 @@ return [
     'default' => 'Mặc định',
     'fallback_if_translation_missing' => 'Dự phòng nếu không có bản dịch',
     'no_permission_admin' => 'Tài khoản này không có quyền truy cập trang quản trị.',
+    'or_continue_with' => 'hoặc tiếp tục với',
+    'login_with_google' => 'Đăng nhập bằng Google',
+    'social_login_failed' => 'Không thể đăng nhập bằng :provider vào lúc này. Vui lòng thử lại sau.',
+    'social_login_email_required' => 'Tài khoản :provider của bạn không cung cấp email. Vui lòng sử dụng phương thức khác.',
+    'social_welcome' => 'Chào mừng, :name! Tài khoản của bạn đã được tạo thành công.',
+    'temporary_password_email_subject' => 'Chào mừng đến với Traveloka - Mật khẩu tạm thời của bạn',
+    'temporary_password_email_body' => "Xin chào :name,\n\nTài khoản Traveloka của bạn đã được tạo thành công.\n\nMật khẩu tạm thời của bạn là: :password\n\nVui lòng đổi mật khẩu sau khi đăng nhập để bảo mật.\n\nTrân trọng,\nĐội ngũ Traveloka",
     
     // Dashboard & Profile
     'dashboard_subtitle' => 'Tổng quan nhanh về hoạt động tài khoản và chuyến đi của bạn.',

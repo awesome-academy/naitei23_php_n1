@@ -211,6 +211,13 @@ return [
     'default' => 'Default',
     'fallback_if_translation_missing' => 'Fallback if translation is missing',
     'no_permission_admin' => 'This account does not have permission to access the admin page.',
+    'or_continue_with' => 'or continue with',
+    'login_with_google' => 'Continue with Google',
+    'social_login_failed' => 'Unable to sign in with :provider right now. Please try again later.',
+    'social_login_email_required' => 'Your :provider account does not provide an email address. Please use another sign-in method.',
+    'social_welcome' => 'Welcome, :name! Your account has been created successfully.',
+    'temporary_password_email_subject' => 'Welcome to Traveloka - Your Temporary Password',
+    'temporary_password_email_body' => "Hi :name,\n\nYour Traveloka account has been created successfully.\n\nYour temporary password is: :password\n\nPlease change your password after logging in for security.\n\nBest regards,\nTraveloka Team",
     
     // Dashboard & Profile
     'dashboard_subtitle' => 'Quick overview of your account activity and trips.',
