@@ -23,12 +23,9 @@
                     aria-expanded="false"
                     aria-label="{{ __('common.change_language') }}">
                 @php
-                    $flagUrls = [
-                        'en' => 'https://flagcdn.com/w20/us.png',
-                        'vi' => 'https://flagcdn.com/w20/vn.png',
-                        'ja' => 'https://flagcdn.com/w20/jp.png',
-                    ];
-                    $currentFlag = $flagUrls[$currentLocale] ?? $flagUrls['en'];
+                    $flagUrls = config('app.locale_flags', []);
+                    $fallbackFlag = 'https://flagcdn.com/w20/us.png';
+                    $currentFlag = $flagUrls[$currentLocale] ?? $fallbackFlag;
                 @endphp
                 <img src="{{ $currentFlag }}" alt="{{ strtoupper($currentLocale) }}" style="width: 20px; height: 15px; object-fit: cover; border-radius: 2px; margin-right: 6px;">
                 <span>{{ strtoupper($currentLocale) }}</span>
@@ -38,19 +35,19 @@
                 <a href="{{ route('locale.switch', 'en') }}" 
                    role="menuitem"
                    class="language-option {{ $currentLocale === 'en' ? 'active' : '' }}">
-                    <img src="https://flagcdn.com/w20/us.png" alt="EN" style="width: 20px; height: 15px; object-fit: cover; border-radius: 2px; margin-right: 8px;">
+                    <img src="{{ $flagUrls['en'] ?? $fallbackFlag }}" alt="EN" style="width: 20px; height: 15px; object-fit: cover; border-radius: 2px; margin-right: 8px;">
                     <span>{{ __('common.english') }}</span>
                 </a>
                 <a href="{{ route('locale.switch', 'vi') }}" 
                    role="menuitem"
                    class="language-option {{ $currentLocale === 'vi' ? 'active' : '' }}">
-                    <img src="https://flagcdn.com/w20/vn.png" alt="VI" style="width: 20px; height: 15px; object-fit: cover; border-radius: 2px; margin-right: 8px;">
+                    <img src="{{ $flagUrls['vi'] ?? 'https://flagcdn.com/w20/vn.png' }}" alt="VI" style="width: 20px; height: 15px; object-fit: cover; border-radius: 2px; margin-right: 8px;">
                     <span>{{ __('common.vietnamese') }}</span>
                 </a>
                 <a href="{{ route('locale.switch', 'ja') }}" 
                    role="menuitem"
                    class="language-option {{ $currentLocale === 'ja' ? 'active' : '' }}">
-                    <img src="https://flagcdn.com/w20/jp.png" alt="JA" style="width: 20px; height: 15px; object-fit: cover; border-radius: 2px; margin-right: 8px;">
+                    <img src="{{ $flagUrls['ja'] ?? 'https://flagcdn.com/w20/jp.png' }}" alt="JA" style="width: 20px; height: 15px; object-fit: cover; border-radius: 2px; margin-right: 8px;">
                     <span>{{ __('common.japanese') }}</span>
                 </a>
             </div>

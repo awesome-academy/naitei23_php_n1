@@ -24,12 +24,9 @@
             <div class="flex items-center space-x-4">
                 @php
                     $currentLocale = app()->getLocale();
-                    $flagUrls = [
-                        'en' => 'https://flagcdn.com/w20/us.png',
-                        'vi' => 'https://flagcdn.com/w20/vn.png',
-                        'ja' => 'https://flagcdn.com/w20/jp.png',
-                    ];
-                    $currentFlag = $flagUrls[$currentLocale] ?? $flagUrls['en'];
+                    $flagUrls = config('app.locale_flags', []);
+                    $fallbackFlag = 'https://flagcdn.com/w20/us.png';
+                    $currentFlag = $flagUrls[$currentLocale] ?? $fallbackFlag;
                 @endphp
                 
                 <div class="relative language-switcher-customer">
@@ -50,19 +47,19 @@
                         <a href="{{ route('locale.switch', 'en') }}" 
                            role="menuitem"
                            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ $currentLocale === 'en' ? 'bg-orange-50 text-orange-600' : '' }}">
-                            <img src="https://flagcdn.com/w20/us.png" alt="EN" width="20" height="15" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
+                        <img src="{{ $flagUrls['en'] ?? $fallbackFlag }}" alt="EN" width="20" height="15" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
                             <span>{{ __('common.english') }}</span>
                         </a>
                         <a href="{{ route('locale.switch', 'vi') }}" 
                            role="menuitem"
                            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ $currentLocale === 'vi' ? 'bg-orange-50 text-orange-600' : '' }}">
-                            <img src="https://flagcdn.com/w20/vn.png" alt="VI" width="20" height="15" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
+                        <img src="{{ $flagUrls['vi'] ?? 'https://flagcdn.com/w20/vn.png' }}" alt="VI" width="20" height="15" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
                             <span>{{ __('common.vietnamese') }}</span>
                         </a>
                         <a href="{{ route('locale.switch', 'ja') }}" 
                            role="menuitem"
                            class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ $currentLocale === 'ja' ? 'bg-orange-50 text-orange-600' : '' }}">
-                            <img src="https://flagcdn.com/w20/jp.png" alt="JA" width="20" height="15" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
+                        <img src="{{ $flagUrls['ja'] ?? 'https://flagcdn.com/w20/jp.png' }}" alt="JA" width="20" height="15" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
                             <span>{{ __('common.japanese') }}</span>
                         </a>
                     </div>
