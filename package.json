@@ -6,6 +6,7 @@
         "build": "vite build --config vite.config.mjs"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^7.1.0",
         "@tailwindcss/forms": "^0.4.0",
         "alpinejs": "^3.4.2",
         "autoprefixer": "^10.4.2",

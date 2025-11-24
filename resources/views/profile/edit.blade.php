@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <div>
-            <h2 class="text-2xl font-semibold text-slate-800">{{ __('Hồ sơ cá nhân') }}</h2>
-            <p class="text-sm text-slate-500 mt-1">Quản lý thông tin tài khoản và cài đặt bảo mật của bạn.</p>
+            <h2 class="text-2xl font-semibold text-slate-800">{{ __('common.profile') }}</h2>
+            <p class="text-sm text-slate-500 mt-1">{{ __('common.profile_subtitle') }}</p>
         </div>
     </x-slot>
 
@@ -20,13 +20,13 @@
                 </div>
                 <div class="grid grid-cols-2 gap-4 mt-6 text-sm text-slate-600">
                     <div class="p-4 rounded-2xl bg-sky-50">
-                        <p class="text-xs uppercase tracking-wide text-sky-600 font-semibold">Trạng thái</p>
+                        <p class="text-xs uppercase tracking-wide text-sky-600 font-semibold">{{ __('common.status') }}</p>
                         <p class="mt-1 font-medium">
-                            {{ Auth::user()->email_verified_at ? __('Đã xác thực') : __('Chưa xác thực') }}
+                            {{ Auth::user()->email_verified_at ? __('common.verified') : __('common.not_verified') }}
                         </p>
                     </div>
                     <div class="p-4 rounded-2xl bg-orange-50">
-                        <p class="text-xs uppercase tracking-wide text-orange-500 font-semibold">Tham gia</p>
+                        <p class="text-xs uppercase tracking-wide text-orange-500 font-semibold">{{ __('common.joined') }}</p>
                         <p class="mt-1 font-medium">{{ Auth::user()->created_at->format('d/m/Y') }}</p>
                     </div>
                 </div>

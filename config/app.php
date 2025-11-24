@@ -54,7 +54,13 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL', null),
+'asset_url' => env('ASSET_URL', null),
+
+'locale_flags' => [
+    'en' => 'https://flagcdn.com/w20/us.png',
+    'vi' => 'https://flagcdn.com/w20/vn.png',
+    'ja' => 'https://flagcdn.com/w20/jp.png',
+],
 
     /*
     |--------------------------------------------------------------------------
