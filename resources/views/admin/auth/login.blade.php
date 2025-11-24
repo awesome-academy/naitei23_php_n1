@@ -1,8 +1,8 @@
 <x-guest-layout>
     <div class="mb-6 text-center">
-        <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Đăng nhập quản trị</h1>
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">{{ __('common.admin_login') }}</h1>
         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Vui lòng đăng nhập bằng tài khoản có quyền quản trị.
+            {{ __('common.please_login_with_admin_account') }}
         </p>
     </div>
 
@@ -25,24 +25,24 @@
         </div>
 
         <div>
-            <x-input-label for="password" :value="__('Mật khẩu')" />
+            <x-input-label for="password" :value="__('common.password')" />
             <x-text-input id="password" class="mt-1 block w-full" type="password" name="password" required autocomplete="current-password" />
         </div>
 
         <div class="flex items-center justify-between">
             <label for="remember" class="inline-flex items-center text-sm text-gray-600 dark:text-gray-400">
                 <input id="remember" type="checkbox" name="remember" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
-                <span class="ml-2">Ghi nhớ đăng nhập</span>
+                <span class="ml-2">{{ __('common.remember_me') }}</span>
             </label>
 
             <a href="{{ url('/') }}" class="text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
-                Quay lại trang chủ
+                {{ __('common.back_to_home') }}
             </a>
         </div>
 
         <div>
             <x-primary-button class="w-full justify-center">
-                Đăng nhập
+                {{ __('common.login') }}
             </x-primary-button>
         </div>
     </form>

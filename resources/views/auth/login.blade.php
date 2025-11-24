@@ -7,8 +7,8 @@
         </x-slot>
 
         <div class="mb-8 text-center">
-            <h1 class="text-2xl font-semibold text-slate-800">Đăng nhập tài khoản</h1>
-            <p class="mt-2 text-sm text-slate-500">Chào mừng bạn quay lại với Traveloka</p>
+            <h1 class="text-2xl font-semibold text-slate-800">{{ __('common.login') }}</h1>
+            <p class="mt-2 text-sm text-slate-500">{{ __('common.new_to_traveloka') }}</p>
         </div>
 
         <x-auth-session-status class="mb-4 text-center" :status="session('status')" />
@@ -48,9 +48,9 @@
                 </x-button>
 
                 <p class="mt-4 text-center text-sm text-slate-500">
-                    {{ __('New to Traveloka?') }}
+                    {{ __('common.new_to_traveloka') }}
                     <a class="font-semibold text-sky-600 hover:text-sky-500" href="{{ route('register') }}">
-                        {{ __('Create an account') }}
+                        {{ __('common.create_account') }}
                     </a>
                 </p>
             </div>

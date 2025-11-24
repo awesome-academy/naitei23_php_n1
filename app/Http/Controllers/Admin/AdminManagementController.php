@@ -48,13 +48,9 @@ class AdminManagementController extends Controller
         $imagePath = null;
 
         if ($request->hasFile('image')) {
+            // Validation đã được xử lý trong StoreTourRequest
             $image = $request->file('image');
-            $allowedExtensions = ['jpeg', 'jpg', 'png', 'gif', 'svg'];
             $extension = $image->guessExtension();
-
-            if (!in_array($extension, $allowedExtensions)) {
-                return redirect()->back()->withErrors(['image' => 'Invalid image extension.'])->withInput();
-            }
 
             // Tạo thư mục nếu chưa tồn tại
             $imageDir = public_path(self::TOUR_IMAGE_DIR);
@@ -68,9 +64,9 @@ class AdminManagementController extends Controller
             $validated['image_url'] = $imagePath;
         }
 
-        Tour::create($validated);
+            Tour::create($validated);
 
-        return redirect()->route('admin.tours')->with('success', 'Tour đã được thêm thành công.');
+            return redirect()->route('admin.tours')->with('success', __('common.tour_added_successfully'));
     }
 
     public function updateTour(UpdateTourRequest $request, Tour $tour)
@@ -83,13 +79,9 @@ class AdminManagementController extends Controller
                 File::delete(public_path($tour->image_url));
             }
 
+            // Validation đã được xử lý trong UpdateTourRequest
             $image = $request->file('image');
-            $allowedExtensions = ['jpeg', 'jpg', 'png', 'gif', 'svg'];
             $extension = $image->guessExtension();
-
-            if (!in_array($extension, $allowedExtensions)) {
-                return redirect()->back()->withErrors(['image' => 'Invalid image extension.'])->withInput();
-            }
 
             // Tạo thư mục nếu chưa tồn tại
             $imageDir = public_path(self::TOUR_IMAGE_DIR);
@@ -102,20 +94,20 @@ class AdminManagementController extends Controller
             $validated['image_url'] = self::TOUR_IMAGE_DIR . '/' . $imageName;
         }
 
-        $tour->update($validated);
+            $tour->update($validated);
 
-        return redirect()->route('admin.tours')->with('success', 'Tour đã được cập nhật thành công.');
+            return redirect()->route('admin.tours')->with('success', __('common.tour_updated_successfully'));
     }
 
     public function deleteTour(Tour $tour)
     {
         // Prevent deletion if tour has associated schedules
-        if ($tour->schedules()->count() > 0) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Không thể xóa tour có lịch trình liên quan.'
-            ], 400);
-        }
+            if ($tour->schedules()->count() > 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('common.cannot_delete_tour_with_schedules')
+                ], 400);
+            }
 
         // Xóa image file nếu có
         if ($tour->image_url && File::exists(public_path($tour->image_url))) {
@@ -124,7 +116,7 @@ class AdminManagementController extends Controller
 
         $tour->delete();
 
-        return response()->json(['success' => true, 'message' => 'Tour đã được xóa thành công.']);
+            return response()->json(['success' => true, 'message' => __('common.tour_deleted_successfully')]);
     }
 
     /**
@@ -144,32 +136,32 @@ class AdminManagementController extends Controller
     public function storeTourSchedule(StoreTourScheduleRequest $request)
     {
         $validated = $request->validated();
-        TourSchedule::create($validated);
+            TourSchedule::create($validated);
 
-        return redirect()->route('admin.tour-schedules')->with('success', 'Lịch trình tour đã được thêm thành công.');
+            return redirect()->route('admin.tour-schedules')->with('success', __('common.schedule_added_successfully'));
     }
 
     public function updateTourSchedule(UpdateTourScheduleRequest $request, TourSchedule $tourSchedule)
     {
         $validated = $request->validated();
-        $tourSchedule->update($validated);
+            $tourSchedule->update($validated);
 
-        return redirect()->route('admin.tour-schedules')->with('success', 'Lịch trình tour đã được cập nhật thành công.');
+            return redirect()->route('admin.tour-schedules')->with('success', __('common.schedule_updated_successfully'));
     }
 
     public function deleteTourSchedule(TourSchedule $tourSchedule)
     {
         // Prevent deletion if schedule has associated bookings
-        if ($tourSchedule->bookings()->count() > 0) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Không thể xóa lịch trình có booking liên quan.'
-            ], 400);
-        }
+            if ($tourSchedule->bookings()->count() > 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('common.cannot_delete_schedule_with_bookings')
+                ], 400);
+            }
 
         $tourSchedule->delete();
 
-        return response()->json(['success' => true, 'message' => 'Lịch trình tour đã được xóa thành công.']);
+            return response()->json(['success' => true, 'message' => __('common.schedule_deleted_successfully')]);
     }
 
     public function bookings()

@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
-    public function changeLanguage(Request $request, $language)
+    /**
+     * Persist the user preferred language in the session.
+     */
+    public function changeLanguage(Request $request, string $locale): RedirectResponse
     {
-        Session::put('lang', $language);
+        $supported = ['en', 'vi', 'ja'];
+        $selectedLocale = in_array($locale, $supported, true) ? $locale : config('app.locale');
+
+        Session::put('locale', $selectedLocale);
+        App::setLocale($selectedLocale);
 
         return redirect()->back();
     }

@@ -24,7 +24,7 @@ class AdminAuthController extends Controller
 
         if (! Auth::attempt($credentials, $remember)) {
             return back()->withErrors([
-                'email' => 'Thông tin đăng nhập không chính xác.',
+                'email' => __('auth.failed'),
             ])->onlyInput('email');
         }
 
@@ -36,7 +36,7 @@ class AdminAuthController extends Controller
             Auth::logout();
 
             return back()->withErrors([
-                'email' => 'Tài khoản này không có quyền truy cập trang quản trị.',
+                'email' => __('common.no_permission_admin'),
             ])->onlyInput('email');
         }
 

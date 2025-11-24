@@ -19,50 +19,50 @@ class AdminDashboardController extends Controller
         $statCards = [
             [
                 'key' => 'total_users',
-                'label' => 'Người dùng',
+                'label' => __('common.total_users_label'),
                 'value' => User::count(),
                 'trend' => [
                     'direction' => 'positive',
-                    'text' => '+12% so với tháng trước',
+                    'text' => __('common.trend_positive_users'),
                 ],
             ],
             [
                 'key' => 'total_tours',
-                'label' => 'Tours',
+                'label' => __('common.total_tours_label'),
                 'value' => Tour::count(),
                 'trend' => [
                     'direction' => 'positive',
-                    'text' => '+4 tour mới',
+                    'text' => __('common.trend_positive_tours'),
                 ],
             ],
             [
                 'key' => 'total_schedules',
-                'label' => 'Lịch trình',
+                'label' => __('common.total_schedules_label'),
                 'value' => TourSchedule::count(),
                 'trend' => null,
             ],
             [
                 'key' => 'total_bookings',
-                'label' => 'Booking',
+                'label' => __('common.total_bookings_label'),
                 'value' => Booking::count(),
                 'trend' => [
                     'direction' => 'positive',
-                    'text' => '+8% so với tuần trước',
+                    'text' => __('common.trend_positive_bookings'),
                 ],
             ],
             [
                 'key' => 'pending_bookings',
-                'label' => 'Đang chờ xử lý',
+                'label' => __('common.pending_bookings_label'),
                 'value' => Booking::where('status', 'pending')->count(),
                 'trend' => null,
             ],
             [
                 'key' => 'successful_payments',
-                'label' => 'Thanh toán thành công',
+                'label' => __('common.successful_payments_label'),
                 'value' => Payment::where('status', 'success')->count(),
                 'trend' => [
                     'direction' => 'positive',
-                    'text' => '+3 giao dịch',
+                    'text' => __('common.trend_positive_payments'),
                 ],
             ],
         ];

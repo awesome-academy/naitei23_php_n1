@@ -4,7 +4,7 @@
 
 @extends('admin.layouts.app')
 
-@section('page-title', 'Bảng điều khiển')
+@section('page-title', __('common.admin_dashboard'))
 
 @section('content')
     <div class="grid grid-3" data-dashboard-stats>
@@ -32,27 +32,27 @@
     <div class="grid" style="margin-top: 30px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 22px;">
         <div class="table-wrapper">
             <div class="table-head">
-                <div class="table-title">Booking gần đây</div>
-                <span class="chip">5 bản ghi</span>
+                <div class="table-title">{{ __('common.recent_bookings') }}</div>
+                <span class="chip">5 {{ __('common.bookings') }}</span>
             </div>
             <table class="admin-table">
                 <thead>
                     <tr>
-                        <th>Khách hàng</th>
-                        <th>Tour</th>
-                        <th>Ngày khởi hành</th>
-                        <th>Trạng thái</th>
+                        <th>{{ __('common.customer') }}</th>
+                        <th>{{ __('common.tour') }}</th>
+                        <th>{{ __('common.departure_date') }}</th>
+                        <th>{{ __('common.status') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($recentBookings as $booking)
                         <tr>
                             <td>
-                                <strong>{{ $booking->user->name ?? 'Ẩn danh' }}</strong><br>
+                                <strong>{{ $booking->user->name ?? __('common.anonymous') }}</strong><br>
                                 <small style="color: var(--traveloka-muted);">{{ $booking->user->email ?? '-' }}</small>
                             </td>
                             <td>
-                                {{ $booking->tourSchedule->tour->name ?? 'Tour không xác định' }}<br>
+                                {{ $booking->tourSchedule->tour->name ?? __('common.tour') }}<br>
                                 <small style="color: var(--traveloka-muted);">{{ $booking->tourSchedule->tour->location ?? '-' }}</small>
                             </td>
                             <td>
@@ -60,13 +60,13 @@
                             </td>
                             <td>
                                 <span class="status-badge status-{{ $booking->status === 'completed' ? 'success' : ($booking->status === 'cancelled' ? 'cancelled' : 'pending') }}">
-                                    {{ Str::title($booking->status) }}
+                                    {{ __("common.{$booking->status}") }}
                                 </span>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="empty-state">Chưa có booking nào</td>
+                            <td colspan="4" class="empty-state">{{ __('common.no_bookings') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -75,17 +75,17 @@
 
         <div class="table-wrapper">
             <div class="table-head">
-                <div class="table-title">Top tour theo đánh giá</div>
-                <span class="chip">Cập nhật realtime</span>
+                <div class="table-title">{{ __('common.top_tours_by_rating') }}</div>
+                <span class="chip">{{ __('common.realtime_update') }}</span>
             </div>
             <table class="admin-table">
                 <thead>
                     <tr>
-                        <th>Tour</th>
-                        <th>Địa điểm</th>
-                        <th>Lịch trình</th>
-                        <th>Đánh giá</th>
-                        <th>Lượt thích</th>
+                        <th>{{ __('common.tour') }}</th>
+                        <th>{{ __('common.location') }}</th>
+                        <th>{{ __('common.schedules') }}</th>
+                        <th>{{ __('common.rating') }}</th>
+                        <th>{{ __('common.likes') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,7 +97,7 @@
                                 <small style="color: var(--traveloka-muted);">{{ Str::limit($tour->description ?? '', 50) }}</small>
                             </td>
                             <td>{{ $tour->location }}</td>
-                            <td>{{ $tour->schedules_count }} lịch</td>
+                            <td>{{ $tour->schedules_count }} {{ __('common.schedules') }}</td>
                             <td>
                                 <span style="display: inline-flex; align-items: center; gap: 4px;">
                                     <i class="fas fa-star" style="color: var(--traveloka-orange);"></i>
@@ -109,7 +109,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="empty-state">Chưa có dữ liệu tour</td>
+                            <td colspan="5" class="empty-state">{{ __('common.no_data') }}</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -119,23 +119,23 @@
 
     <div class="table-wrapper" style="margin-top: 30px;">
         <div class="table-head">
-            <div class="table-title">Đánh giá mới nhất</div>
+            <div class="table-title">{{ __('common.latest_reviews') }}</div>
         </div>
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>Khách hàng</th>
-                    <th>Tour</th>
-                    <th>Rating</th>
-                    <th>Nội dung</th>
-                    <th>Ngày</th>
+                    <th>{{ __('common.customer') }}</th>
+                    <th>{{ __('common.tour') }}</th>
+                    <th>{{ __('common.rating') }}</th>
+                    <th>{{ __('common.review_content') }}</th>
+                    <th>{{ __('common.review_date') }}</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($recentReviews as $review)
                     <tr>
-                        <td>{{ $review->user->name ?? 'Ẩn danh' }}</td>
-                        <td>{{ $review->tour->name ?? 'Tour' }}</td>
+                        <td>{{ $review->user->name ?? __('common.anonymous') }}</td>
+                        <td>{{ $review->tour->name ?? __('common.tour') }}</td>
                         <td>
                             <span class="chip">{{ $review->rating }}/5</span>
                         </td>
@@ -144,7 +144,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="empty-state">Chưa có đánh giá</td>
+                        <td colspan="5" class="empty-state">{{ __('common.no_reviews') }}</td>
                     </tr>
                 @endforelse
             </tbody>

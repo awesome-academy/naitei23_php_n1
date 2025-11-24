@@ -7,8 +7,8 @@
         </x-slot>
 
         <div class="mb-8 text-center">
-            <h1 class="text-2xl font-semibold text-slate-800">Tạo tài khoản Traveloka</h1>
-            <p class="mt-2 text-sm text-slate-500">Chỉ mất vài bước để bắt đầu những hành trình mới</p>
+            <h1 class="text-2xl font-semibold text-slate-800">{{ __('common.create_account') }}</h1>
+            <p class="mt-2 text-sm text-slate-500">{{ __('common.new_to_traveloka') }}</p>
         </div>
 
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
@@ -46,9 +46,9 @@
                     {{ __('Register') }}
                 </x-button>
                 <p class="text-center text-sm text-slate-500">
-                    {{ __('Already registered?') }}
+                    {{ __('common.already_registered') }}
                     <a class="font-semibold text-sky-600 hover:text-sky-500" href="{{ route('login') }}">
-                        {{ __('Log in') }}
+                        {{ __('common.login') }}
                     </a>
                 </p>
             </div>

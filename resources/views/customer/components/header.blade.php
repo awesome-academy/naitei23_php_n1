@@ -11,17 +11,60 @@
             <nav class="hidden md:flex space-x-8">
                 <a href="{{ route('customer.categories') }}" 
                    class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('customer.categories') ? 'text-orange-500' : '' }}">
-                    Danh mục Tour
+                    {{ __('common.tour_categories') }}
                 </a>
                 <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">
-                    Về chúng tôi
+                    {{ __('common.about_us') }}
                 </a>
                 <a href="#" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">
-                    Liên hệ
+                    {{ __('common.contact') }}
                 </a>
             </nav>
 
             <div class="flex items-center space-x-4">
+                @php
+                    $currentLocale = app()->getLocale();
+                    $flagUrls = [
+                        'en' => 'https://flagcdn.com/w20/us.png',
+                        'vi' => 'https://flagcdn.com/w20/vn.png',
+                        'ja' => 'https://flagcdn.com/w20/jp.png',
+                    ];
+                    $currentFlag = $flagUrls[$currentLocale] ?? $flagUrls['en'];
+                @endphp
+                
+                <div class="relative language-switcher-customer">
+                    <button type="button"
+                            id="customerLanguageToggle"
+                            class="flex items-center space-x-2 text-gray-700 hover:text-orange-500 focus:outline-none px-3 py-2 rounded-md transition-colors"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            aria-label="{{ __('common.change_language') }}">
+                        <img src="{{ $currentFlag }}" alt="{{ strtoupper($currentLocale) }}" class="w-5 h-4 object-cover rounded" style="border: 1px solid #e5e7eb;">
+                        <span class="text-sm font-medium">{{ strtoupper($currentLocale) }}</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="customerLanguageMenu" 
+                         class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200"
+                         role="menu"
+                         aria-orientation="vertical">
+                        <a href="{{ route('locale.switch', 'en') }}" 
+                           class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ $currentLocale === 'en' ? 'bg-orange-50 text-orange-600' : '' }}">
+                            <img src="https://flagcdn.com/w20/us.png" alt="EN" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
+                            <span>{{ __('common.english') }}</span>
+                        </a>
+                        <a href="{{ route('locale.switch', 'vi') }}" 
+                           class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ $currentLocale === 'vi' ? 'bg-orange-50 text-orange-600' : '' }}">
+                            <img src="https://flagcdn.com/w20/vn.png" alt="VI" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
+                            <span>{{ __('common.vietnamese') }}</span>
+                        </a>
+                        <a href="{{ route('locale.switch', 'ja') }}" 
+                           class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {{ $currentLocale === 'ja' ? 'bg-orange-50 text-orange-600' : '' }}">
+                            <img src="https://flagcdn.com/w20/jp.png" alt="JA" class="w-5 h-4 object-cover rounded mr-3" style="border: 1px solid #e5e7eb;">
+                            <span>{{ __('common.japanese') }}</span>
+                        </a>
+                    </div>
+                </div>
+
                 @auth
                     <div class="relative user-dropdown">
                         <button id="userDropdown" 
@@ -38,22 +81,22 @@
                              role="menu"
                              aria-orientation="vertical">
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                <i class="fas fa-user mr-2"></i> Hồ sơ
+                                <i class="fas fa-user mr-2"></i> {{ __('common.profile') }}
                             </a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    <i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất
+                                    <i class="fas fa-sign-out-alt mr-2"></i> {{ __('common.logout') }}
                                 </button>
                             </form>
                         </div>
                     </div>
                 @else
                     <a href="{{ route('login') }}" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">
-                        Đăng nhập
+                        {{ __('common.login') }}
                     </a>
                     <a href="{{ route('register') }}" class="bg-orange-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-600">
-                        Đăng ký
+                        {{ __('common.register') }}
                     </a>
                 @endauth
             </div>
@@ -69,6 +112,40 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Language switcher
+    const languageToggle = document.getElementById('customerLanguageToggle');
+    const languageMenu = document.getElementById('customerLanguageMenu');
+    
+    if (languageToggle && languageMenu) {
+        languageToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            const isOpen = !languageMenu.classList.contains('hidden');
+            languageMenu.classList.toggle('hidden', isOpen);
+            languageToggle.setAttribute('aria-expanded', !isOpen);
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!languageToggle.contains(e.target) && !languageMenu.contains(e.target)) {
+                languageMenu.classList.add('hidden');
+                languageToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Keyboard navigation
+        languageToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                languageToggle.click();
+            } else if (e.key === 'Escape') {
+                languageMenu.classList.add('hidden');
+                languageToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    // User dropdown
     const userDropdown = document.getElementById('userDropdown');
     const userMenu = document.getElementById('userMenu');
     

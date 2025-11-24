@@ -7,7 +7,7 @@
         </x-slot>
 
         <div class="text-center mb-6">
-            <h1 class="text-2xl font-semibold text-slate-800">Quên mật khẩu?</h1>
+            <h1 class="text-2xl font-semibold text-slate-800">{{ __('common.forgot_password') }}</h1>
             <p class="mt-2 text-sm text-slate-500">
                 {{ __('Enter your email and we will send you a secure link to reset it.') }}
             </p>
@@ -29,7 +29,7 @@
                     {{ __('Email Password Reset Link') }}
                 </x-button>
                 <a href="{{ route('login') }}" class="block text-center text-sm font-semibold text-sky-600 hover:text-sky-500">
-                    {{ __('Back to login') }}
+                    {{ __('common.login') }}
                 </a>
             </div>
         </form>
