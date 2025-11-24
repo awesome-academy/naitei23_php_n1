@@ -129,6 +129,16 @@ return [
     'failed' => '失敗',
     
     // Dashboard
+    'total_users_label' => 'ユーザー',
+    'total_tours_label' => 'ツアー',
+    'total_schedules_label' => 'スケジュール',
+    'total_bookings_label' => '予約',
+    'pending_bookings_label' => '保留中',
+    'successful_payments_label' => '支払い成功',
+    'trend_positive_users' => '先月比+12%',
+    'trend_positive_tours' => '新規ツアー+4',
+    'trend_positive_bookings' => '先週比+8%',
+    'trend_positive_payments' => '取引+3',
     'recent_bookings' => '最近の予約',
     'top_tours_by_rating' => '評価別トップツアー',
     'latest_reviews' => '最新のレビュー',
@@ -136,6 +146,7 @@ return [
     'no_data' => 'データがありません',
     'no_tours_found' => 'ツアーが見つかりません',
     'no_schedules_found' => 'スケジュールが見つかりません',
+    'likes' => 'いいね',
     
     // Customer Pages
     'view_schedules' => 'スケジュールを見る',
@@ -177,4 +188,7 @@ return [
     
     // Other
     'stay_inspired' => 'Stay inspired',
+    'default' => 'デフォルト',
+    'fallback_if_translation_missing' => '翻訳がない場合のフォールバック',
+    'no_permission_admin' => 'このアカウントには管理者ページへのアクセス権限がありません。',
 ];

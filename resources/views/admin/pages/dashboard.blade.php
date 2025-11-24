@@ -85,7 +85,7 @@
                         <th>{{ __('common.location') }}</th>
                         <th>{{ __('common.schedules') }}</th>
                         <th>{{ __('common.rating') }}</th>
-                        <th>Likes</th>
+                        <th>{{ __('common.likes') }}</th>
                     </tr>
                 </thead>
                 <tbody>

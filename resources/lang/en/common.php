@@ -129,6 +129,16 @@ return [
     'failed' => 'Failed',
     
     // Dashboard
+    'total_users_label' => 'Users',
+    'total_tours_label' => 'Tours',
+    'total_schedules_label' => 'Schedules',
+    'total_bookings_label' => 'Booking',
+    'pending_bookings_label' => 'Pending',
+    'successful_payments_label' => 'Successful Payments',
+    'trend_positive_users' => '+12% compared to last month',
+    'trend_positive_tours' => '+4 new tours',
+    'trend_positive_bookings' => '+8% compared to last week',
+    'trend_positive_payments' => '+3 transactions',
     'recent_bookings' => 'Recent Bookings',
     'top_tours_by_rating' => 'Top Tours by Rating',
     'latest_reviews' => 'Latest Reviews',
@@ -136,6 +146,7 @@ return [
     'no_data' => 'No data',
     'no_tours_found' => 'No tours found',
     'no_schedules_found' => 'No schedules found',
+    'likes' => 'Likes',
     
     // Customer Pages
     'view_schedules' => 'View Schedules',
@@ -177,4 +188,7 @@ return [
     
     // Other
     'stay_inspired' => 'Stay inspired',
+    'default' => 'Default',
+    'fallback_if_translation_missing' => 'Fallback if translation is missing',
+    'no_permission_admin' => 'This account does not have permission to access the admin page.',
 ];

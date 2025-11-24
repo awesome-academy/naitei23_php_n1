@@ -2,7 +2,7 @@
 <div id="tourModal" class="modal" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>{{ __('common.add_new_tour') }}</h3>
+            <h3>{{ __('common.add_new_tour_modal_title') }}</h3>
             <span class="close" onclick="document.getElementById('tourModal').style.display='none'">&times;</span>
         </div>
         <form id="tourForm" action="{{ route('admin.tours.store') }}" method="POST" enctype="multipart/form-data">
@@ -13,7 +13,7 @@
             </div>
             <div class="form-group">
                 <label>{{ __('common.slug') }}</label>
-                <input type="text" name="slug" class="form-control" placeholder="{{ __('common.auto_generate_from_name') }}">
+                <input type="text" name="slug" class="form-control" placeholder="{{ __('common.auto_generated_if_empty') }}">
             </div>
             <div class="form-group">
                 <label>{{ __('common.description') }}</label>
@@ -39,7 +39,7 @@
 <div id="editTourModal" class="modal" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>{{ __('common.edit_tour') }}</h3>
+            <h3>{{ __('common.edit_tour_modal_title') }}</h3>
             <span class="close" onclick="document.getElementById('editTourModal').style.display='none'">&times;</span>
         </div>
         <form id="editTourForm" method="POST" enctype="multipart/form-data">
@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label>{{ __('common.slug') }}</label>
-                <input type="text" name="slug" id="edit_tour_slug" class="form-control" placeholder="{{ __('common.auto_generate_from_name') }}">
+                <input type="text" name="slug" id="edit_tour_slug" class="form-control" placeholder="{{ __('common.auto_generated_if_empty') }}">
             </div>
             <div class="form-group">
                 <label>{{ __('common.description') }}</label>
@@ -67,7 +67,7 @@
                 <input type="file" name="image" class="form-control" accept="image/*">
                 <div style="margin-top: 10px;">
                     <label>{{ __('common.current_image') }}:</label><br>
-                    <img id="edit_tour_current_image" src="" alt="{{ __('common.current_image') }}" style="max-width: 200px; max-height: 200px; margin-top: 10px; display: none; border-radius: 4px;">
+                    <img id="edit_tour_current_image" src="" alt="Current image" style="max-width: 200px; max-height: 200px; margin-top: 10px; display: none; border-radius: 4px;">
                 </div>
             </div>
             <div style="text-align: right; margin-top: 20px;">
@@ -77,5 +77,3 @@
         </form>
     </div>
 </div>
-
-

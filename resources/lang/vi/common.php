@@ -129,6 +129,16 @@ return [
     'failed' => 'Thất bại',
     
     // Dashboard
+    'total_users_label' => 'Người dùng',
+    'total_tours_label' => 'Tours',
+    'total_schedules_label' => 'Lịch trình',
+    'total_bookings_label' => 'Booking',
+    'pending_bookings_label' => 'Đang chờ xử lý',
+    'successful_payments_label' => 'Thanh toán thành công',
+    'trend_positive_users' => '+12% so với tháng trước',
+    'trend_positive_tours' => '+4 tour mới',
+    'trend_positive_bookings' => '+8% so với tuần trước',
+    'trend_positive_payments' => '+3 giao dịch',
     'recent_bookings' => 'Booking gần đây',
     'top_tours_by_rating' => 'Top tour theo đánh giá',
     'latest_reviews' => 'Đánh giá mới nhất',
@@ -136,6 +146,7 @@ return [
     'no_data' => 'Chưa có dữ liệu',
     'no_tours_found' => 'Chưa có tour nào',
     'no_schedules_found' => 'Chưa có lịch trình nào',
+    'likes' => 'Lượt thích',
     
     // Customer Pages
     'view_schedules' => 'Xem Lịch trình',
@@ -177,4 +188,7 @@ return [
     
     // Other
     'stay_inspired' => 'Stay inspired',
+    'default' => 'Mặc định',
+    'fallback_if_translation_missing' => 'Dự phòng nếu không có bản dịch',
+    'no_permission_admin' => 'Tài khoản này không có quyền truy cập trang quản trị.',
 ];
