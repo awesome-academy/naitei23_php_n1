@@ -211,6 +211,13 @@ return [
     'default' => 'デフォルト',
     'fallback_if_translation_missing' => '翻訳がない場合のフォールバック',
     'no_permission_admin' => 'このアカウントには管理者ページへのアクセス権限がありません。',
+    'or_continue_with' => 'または次で続行',
+    'login_with_google' => 'Googleでログイン',
+    'social_login_failed' => ':provider でのログインに失敗しました。後ほど再度お試しください。',
+    'social_login_email_required' => ':provider アカウントにメールアドレスがありません。別の方法でログインしてください。',
+    'social_welcome' => 'ようこそ、:name さん！アカウントが正常に作成されました。',
+    'temporary_password_email_subject' => 'Travelokaへようこそ - 一時パスワード',
+    'temporary_password_email_body' => ":name 様\n\nTravelokaアカウントが正常に作成されました。\n\n一時パスワードは次のとおりです: :password\n\nセキュリティのため、ログイン後にパスワードを変更してください。\n\nよろしくお願いいたします。\nTravelokaチーム",
     
     // Dashboard & Profile
     'dashboard_subtitle' => 'アカウントの活動と旅行の概要を素早く確認できます。',

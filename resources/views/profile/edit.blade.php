@@ -1,4 +1,27 @@
 <x-app-layout>
+    @if(session('welcome_message'))
+        <div id="welcome-banner"
+             class="mb-6 px-4 py-3 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-between shadow">
+            <span>{{ session('welcome_message') }}</span>
+            <button type="button"
+                    id="close-welcome-banner"
+                    class="font-semibold"
+                    aria-label="{{ __('common.close') }}">
+                &times;
+            </button>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const closeButton = document.getElementById('close-welcome-banner');
+                const banner = document.getElementById('welcome-banner');
+                if (closeButton && banner) {
+                    closeButton.addEventListener('click', function() {
+                        banner.style.display = 'none';
+                    });
+                }
+            });
+        </script>
+    @endif
     <x-slot name="header">
         <div>
             <h2 class="text-2xl font-semibold text-slate-800">{{ __('common.profile') }}</h2>
