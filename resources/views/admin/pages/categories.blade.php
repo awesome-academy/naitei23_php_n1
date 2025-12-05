@@ -177,7 +177,14 @@
                 .then(async response => {
                     const data = await response.json();
                     if (response.ok) {
-                        window.location.reload();
+                        const successMessage = 'Cập nhật danh mục tour thành công!';
+                        if (window.AdminUI && window.AdminUI.showFlashMessage) {
+                            window.AdminUI.showFlashMessage(successMessage);
+                        }
+                        // Reload after a short delay to show the message
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
                     } else {
                         alert(data.message || @json(__('common.cannot_delete_category_with_tours')));
                     }

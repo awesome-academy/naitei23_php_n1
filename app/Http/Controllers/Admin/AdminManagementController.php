@@ -25,6 +25,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminManagementController extends Controller
 {
@@ -94,7 +95,7 @@ class AdminManagementController extends Controller
         $user = User::create($validated);
         $user->roles()->attach($roleIds);
 
-        return redirect()->route('admin.users')->with('success', __('common.user_created_successfully'));
+        return redirect()->route('admin.users')->with('success', 'Tạo người dùng thành công!');
     }
 
     /**
@@ -116,7 +117,7 @@ class AdminManagementController extends Controller
         $user->update($validated);
         $user->roles()->sync($roleIds);
 
-        return redirect()->route('admin.users')->with('success', __('common.user_updated_successfully'));
+        return redirect()->route('admin.users')->with('success', 'Cập nhật người dùng thành công!');
     }
 
     /**
@@ -162,7 +163,7 @@ class AdminManagementController extends Controller
 
         Category::create($validated);
 
-        return redirect()->route('admin.categories')->with('success', __('common.category_created_successfully'));
+        return redirect()->route('admin.categories')->with('success', 'Cập nhật danh mục tour thành công!');
     }
 
     public function updateCategory(UpdateCategoryRequest $request, Category $category)
@@ -175,7 +176,7 @@ class AdminManagementController extends Controller
 
         $category->update($validated);
 
-        return redirect()->route('admin.categories')->with('success', __('common.category_updated_successfully'));
+        return redirect()->route('admin.categories')->with('success', 'Cập nhật danh mục tour thành công!');
     }
 
     public function deleteCategory(Category $category)
@@ -222,7 +223,7 @@ class AdminManagementController extends Controller
 
         Tour::create($validated);
 
-        return redirect()->route('admin.tours')->with('success', __('common.tour_added_successfully'));
+        return redirect()->route('admin.tours')->with('success', 'Cập nhật tour thành công!');
     }
 
     public function updateTour(UpdateTourRequest $request, Tour $tour)
@@ -235,7 +236,7 @@ class AdminManagementController extends Controller
 
         $tour->update($validated);
 
-        return redirect()->route('admin.tours')->with('success', __('common.tour_updated_successfully'));
+        return redirect()->route('admin.tours')->with('success', 'Cập nhật tour thành công!');
     }
 
     public function deleteTour(Tour $tour)
@@ -273,7 +274,7 @@ class AdminManagementController extends Controller
         $validated = $request->validated();
             TourSchedule::create($validated);
 
-            return redirect()->route('admin.tour-schedules')->with('success', __('common.schedule_added_successfully'));
+            return redirect()->route('admin.tour-schedules')->with('success', 'Cập nhật lịch trình tour thành công!');
     }
 
     public function updateTourSchedule(UpdateTourScheduleRequest $request, TourSchedule $tourSchedule)
@@ -281,7 +282,7 @@ class AdminManagementController extends Controller
         $validated = $request->validated();
             $tourSchedule->update($validated);
 
-            return redirect()->route('admin.tour-schedules')->with('success', __('common.schedule_updated_successfully'));
+            return redirect()->route('admin.tour-schedules')->with('success', 'Cập nhật lịch trình tour thành công!');
     }
 
     public function deleteTourSchedule(TourSchedule $tourSchedule)
@@ -308,6 +309,23 @@ class AdminManagementController extends Controller
         return view('admin.pages.bookings', compact('bookings'));
     }
 
+    /**
+     * Export all bookings to PDF for admin reporting.
+     */
+    public function exportBookingsPdf()
+    {
+        $bookings = Booking::with(['user', 'tourSchedule.tour'])
+            ->orderByDesc('created_at')
+            ->get();
+
+        $pdf = Pdf::loadView('admin.pdf.bookings', [
+            'bookings' => $bookings,
+            'generatedAt' => now(),
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->download('admin-bookings-' . now()->format('Ymd_His') . '.pdf');
+    }
+
     public function payments()
     {
         $payments = Payment::with(['booking.user'])
@@ -323,6 +341,13 @@ class AdminManagementController extends Controller
             ->latest()
             ->paginate(12);
 
+        // Check if there's a new review notification from session
+        if (session('new_review_notification')) {
+            session()->flash('success', session('new_review_message', 'Đã thêm review/comment mới!'));
+            session()->forget('new_review_notification');
+            session()->forget('new_review_message');
+        }
+
         return view('admin.pages.reviews', compact('reviews'));
     }
 
@@ -331,6 +356,13 @@ class AdminManagementController extends Controller
         $comments = Comment::with(['user', 'commentable'])
             ->latest()
             ->paginate(12);
+
+        // Check if there's a new comment notification from session
+        if (session('new_comment_notification')) {
+            session()->flash('success', session('new_comment_message', 'Đã thêm review/comment mới!'));
+            session()->forget('new_comment_notification');
+            session()->forget('new_comment_message');
+        }
 
         return view('admin.pages.comments', compact('comments'));
     }

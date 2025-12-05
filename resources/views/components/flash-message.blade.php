@@ -1,0 +1,14 @@
+@if (session('success'))
+    <div class="flash-message-container">
+        <div class="flash-message flash-message--success" data-flash-message>
+            <div class="flash-message__icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="flash-message__content">
+                {{ session('success') }}
+            </div>
+        </div>
+    </div>
+@endif
+
+
