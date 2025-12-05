@@ -24,6 +24,8 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
+        $request->session()->flash('success', 'Đổi mật khẩu thành công!');
+
         return back()->with('status', 'password-updated');
     }
 }

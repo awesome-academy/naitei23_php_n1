@@ -53,9 +53,15 @@ class ReviewController extends Controller
 
         $review->load('user', 'likes', 'comments.user');
 
-        // Flash message for customer
+        // Flash message for admin notification (will be shown when admin visits reviews page)
+        // Store in session with a key that admin can check
+        session()->flash('new_review_notification', true);
+        session()->flash('new_review_message', 'Đã thêm review/comment mới!');
+
+        // Flash message for customer flow when redirected
         if (! $request->expectsJson()) {
             $request->session()->flash('success', 'Đã tạo đánh giá thành công!');
+
             return redirect()->back();
         }
 
@@ -103,9 +109,9 @@ class ReviewController extends Controller
 
         $review->load('user', 'likes', 'comments.user');
 
-        // Flash message for customer
         if (! $request->expectsJson()) {
             $request->session()->flash('success', 'Đã cập nhật đánh giá thành công!');
+
             return redirect()->back();
         }
 

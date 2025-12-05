@@ -365,9 +365,14 @@
             .then(async response => {
                 const data = await response.json();
                 if (response.ok) {
-                    const successMessage = data.message || @json(__('common.user_deleted_successfully'));
-                    alert(successMessage);
-                    window.location.reload();
+                    const successMessage = 'Xóa người dùng thành công!';
+                    if (window.AdminUI && window.AdminUI.showFlashMessage) {
+                        window.AdminUI.showFlashMessage(successMessage);
+                    }
+                    // Reload after a short delay to show the message
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
                 } else {
                     const errorMessage = data.message || @json(__('common.error_deleting_user'));
                     alert(errorMessage);
