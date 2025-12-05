@@ -19,14 +19,21 @@ const AdminUI = {
 
     bindSidebarToggle() {
         const shell = document.querySelector('.admin-shell');
-        const toggleBtn = document.querySelector('[data-sidebar-toggle]');
+        const toggles = document.querySelectorAll('[data-sidebar-toggle]');
 
-        if (!shell || !toggleBtn) {
+        if (!shell || !toggles.length) {
             return;
         }
 
-        toggleBtn.addEventListener('click', () => {
-            shell.classList.toggle('sidebar-collapsed');
+        const toggleSidebar = () => {
+            shell.classList.toggle('sidebar-open');
+        };
+
+        toggles.forEach((btn) => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault();
+                toggleSidebar();
+            });
         });
     },
 
