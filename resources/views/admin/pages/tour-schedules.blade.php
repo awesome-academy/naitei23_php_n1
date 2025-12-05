@@ -192,7 +192,14 @@
             .then(async response => {
                 const data = await response.json();
                 if (response.ok) {
-                    window.location.reload();
+                    const successMessage = 'Cập nhật lịch trình tour thành công!';
+                    if (window.AdminUI && window.AdminUI.showFlashMessage) {
+                        window.AdminUI.showFlashMessage(successMessage);
+                    }
+                    // Reload after a short delay to show the message
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
                 } else {
                     const errorMessage = data.message || @json(__('common.cannot_delete_schedule_with_bookings'));
                     alert(errorMessage);
