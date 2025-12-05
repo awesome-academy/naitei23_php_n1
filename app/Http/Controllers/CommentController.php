@@ -36,6 +36,12 @@ class CommentController extends Controller
 
         $comment->load('user');
 
+        // Flash message for customer
+        if (! $request->expectsJson()) {
+            $request->session()->flash('success', 'Đã thêm bình luận thành công!');
+            return redirect()->back();
+        }
+
         return response()->json([
             'success' => true,
             'message' => __('common.comment_created_successfully'),
@@ -74,6 +80,12 @@ class CommentController extends Controller
         ]);
 
         $comment->load('user');
+
+        // Flash message for customer
+        if (! $request->expectsJson()) {
+            $request->session()->flash('success', 'Đã cập nhật bình luận thành công!');
+            return redirect()->back();
+        }
 
         return response()->json([
             'success' => true,

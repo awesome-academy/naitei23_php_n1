@@ -53,6 +53,12 @@ class ReviewController extends Controller
 
         $review->load('user', 'likes', 'comments.user');
 
+        // Flash message for customer
+        if (! $request->expectsJson()) {
+            $request->session()->flash('success', 'Đã tạo đánh giá thành công!');
+            return redirect()->back();
+        }
+
         return response()->json([
             'success' => true,
             'message' => __('common.review_created_successfully'),
@@ -96,6 +102,12 @@ class ReviewController extends Controller
         $review->tour->updateAverageRating();
 
         $review->load('user', 'likes', 'comments.user');
+
+        // Flash message for customer
+        if (! $request->expectsJson()) {
+            $request->session()->flash('success', 'Đã cập nhật đánh giá thành công!');
+            return redirect()->back();
+        }
 
         return response()->json([
             'success' => true,
