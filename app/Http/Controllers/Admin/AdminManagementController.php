@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -449,12 +450,12 @@ class AdminManagementController extends Controller
     }
 
     /**
-     * Upload an image file to the specified directory.
+     * Upload an image file to S3 or local storage (with fallback).
      *
      * @param \Illuminate\Http\UploadedFile|null $image The uploaded image file
-     * @param string $directory The target directory path (relative to public)
+     * @param string $directory The target directory path (e.g., 'images/tours' or 'images/categories')
      * @param string|null $oldPath Optional path to old image to delete
-     * @return string|null The relative path to the uploaded image, or null if no image provided
+     * @return string|null The path to the uploaded image, or null if no image provided
      * @throws \Exception If file operations fail
      */
     private function uploadImage(?UploadedFile $image, string $directory, ?string $oldPath = null): ?string
@@ -463,39 +464,97 @@ class AdminManagementController extends Controller
             return null;
         }
 
+        // Delete old image if exists
         $this->deleteImage($oldPath);
 
-        try {
-            $imageDir = public_path($directory);
-            if (!File::exists($imageDir)) {
-                File::makeDirectory($imageDir, 0755, true);
+        // Generate unique filename
+        $imageName = Str::uuid() . '.' . $image->guessExtension();
+        $imagePath = $directory . '/' . $imageName;
+
+        // Check if S3 is configured
+        $s3Configured = !empty(env('AWS_ACCESS_KEY_ID')) && !empty(env('AWS_SECRET_ACCESS_KEY')) && !empty(env('AWS_BUCKET'));
+
+        // Try S3 first if configured
+        if ($s3Configured) {
+            try {
+                Storage::disk('s3')->put($imagePath, file_get_contents($image->getRealPath()), 'public');
+                \Log::info('Image uploaded to S3: ' . $imagePath);
+                return $imagePath;
+            } catch (\Exception $e) {
+                \Log::warning('Failed to upload image to S3, falling back to local storage: ' . $e->getMessage());
+                // Fall through to local storage
             }
+        }
 
-            $imageName = Str::uuid() . '.' . $image->guessExtension();
-            $image->move($imageDir, $imageName);
-
-            return $directory . '/' . $imageName;
+        // Fallback to local storage
+        try {
+            Storage::disk('public')->put($imagePath, file_get_contents($image->getRealPath()), 'public');
+            \Log::info('Image uploaded to local storage: ' . $imagePath);
+            return $imagePath;
         } catch (\Exception $e) {
-            \Log::error('Failed to upload image: ' . $e->getMessage());
+            \Log::error('Failed to upload image to local storage: ' . $e->getMessage());
             throw new \Exception('Failed to upload image: ' . $e->getMessage());
         }
     }
 
     /**
-     * Delete an image file from the public directory.
+     * Delete an image file from S3 or local storage.
      *
-     * @param string|null $path The relative path to the image file
+     * @param string|null $path The path to the image file
      * @return void
      */
     private function deleteImage(?string $path): void
     {
-        if ($path && File::exists(public_path($path))) {
+        if (!$path) {
+            return;
+        }
+
+        // Check if S3 is configured
+        $s3Configured = !empty(env('AWS_ACCESS_KEY_ID')) && !empty(env('AWS_SECRET_ACCESS_KEY')) && !empty(env('AWS_BUCKET'));
+
+        // Try to delete from S3 if configured
+        if ($s3Configured) {
             try {
-                File::delete(public_path($path));
+                if (Storage::disk('s3')->exists($path)) {
+                    Storage::disk('s3')->delete($path);
+                    \Log::info('Image deleted from S3: ' . $path);
+                    return;
+                }
             } catch (\Exception $e) {
-                \Log::error('Failed to delete image: ' . $e->getMessage());
+                \Log::warning('Failed to delete image from S3: ' . $e->getMessage());
             }
         }
+
+        // Fallback to local storage
+        try {
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+                \Log::info('Image deleted from local storage: ' . $path);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Failed to delete image from local storage: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Get the full URL for an image stored in S3.
+     *
+     * @param string|null $path The S3 path to the image
+     * @return string|null The full URL to the image, or null if path is empty
+     */
+    public static function getImageUrl(?string $path): ?string
+    {
+        if (!$path) {
+            return null;
+        }
+
+        // If path already contains http/https, return as is (for backward compatibility)
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        // Get URL from S3
+        return Storage::disk('s3')->url($path);
     }
 }
 

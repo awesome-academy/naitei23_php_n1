@@ -47,6 +47,8 @@ return [
     'image' => '画像',
     'current_image' => '現在の画像',
     'new_image' => '新しい画像',
+    'image_preview' => '画像プレビュー',
+    'new_image_preview' => '新しい画像プレビュー',
     'schedules' => 'スケジュール',
     'rating' => '評価',
     'actions' => '操作',

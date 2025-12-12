@@ -78,6 +78,11 @@ Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'das
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+// Image proxy route (to serve S3 images when bucket is not public)
+Route::get('/image/{path}', [\App\Http\Controllers\ImageProxyController::class, 'proxy'])
+    ->where('path', '.*')
+    ->name('image.proxy');
+
 // Customer routes (public with rate limiting)
 Route::get('/categories', [\App\Http\Controllers\CustomerController::class, 'categories'])
     ->middleware('throttle:60,1')

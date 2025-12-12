@@ -53,6 +53,8 @@ return [
     'image' => 'Hình ảnh',
     'current_image' => 'Hình ảnh hiện tại',
     'new_image' => 'Hình ảnh mới',
+    'image_preview' => 'Xem trước hình ảnh',
+    'new_image_preview' => 'Xem trước hình ảnh mới',
     'schedules' => 'Lịch trình',
     'rating' => 'Đánh giá',
     'category' => 'Danh mục',

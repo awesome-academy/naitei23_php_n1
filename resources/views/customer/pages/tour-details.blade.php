@@ -56,7 +56,7 @@
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
                     <div>
-                        <img src="{{ Str::startsWith($tour->image_url, ['http://', 'https://']) ? $tour->image_url : asset($tour->image_url) }}" 
+                        <img src="{{ $tour->image_url }}" 
                              alt="{{ $tour->name }}" 
                              width="800" 
                              height="320"

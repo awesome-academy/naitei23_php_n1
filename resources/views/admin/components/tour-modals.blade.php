@@ -34,7 +34,11 @@
             </div>
             <div class="form-group">
                 <label>{{ __('common.image') }}</label>
-                <input type="file" name="image" class="form-control" accept="image/*">
+                <input type="file" name="image" id="tour_image_input" class="form-control" accept="image/*">
+                <div id="tour_image_preview" style="margin-top: 12px; display: none;">
+                    <label style="font-size: 13px; color: var(--traveloka-muted, #6b7b93); font-weight: normal; display: block; margin-bottom: 8px;">{{ __('common.image_preview') }}:</label>
+                    <img id="tour_image_preview_img" src="" alt="Image preview" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid var(--traveloka-border, #e4ecf7); object-fit: contain; background: #f8f9fa;">
+                </div>
             </div>
         </form>
         <div class="modal-footer">
@@ -82,10 +86,16 @@
             </div>
             <div class="form-group">
                 <label>{{ __('common.new_image') }}</label>
-                <input type="file" name="image" class="form-control" accept="image/*">
-                <div style="margin-top: 10px;">
-                    <label style="font-size: 13px; color: var(--traveloka-muted, #6b7b93); font-weight: normal;">{{ __('common.current_image') }}:</label><br>
-                    <img id="edit_tour_current_image" src="" alt="Current image" style="max-width: 200px; max-height: 200px; margin-top: 8px; display: none; border-radius: 8px; border: 1px solid var(--traveloka-border, #e4ecf7);">
+                <input type="file" name="image" id="edit_tour_image_input" class="form-control" accept="image/*">
+                <div style="margin-top: 12px;">
+                    <div id="edit_tour_current_image_container" style="margin-bottom: 12px; display: none;">
+                        <label style="font-size: 13px; color: var(--traveloka-muted, #6b7b93); font-weight: normal; display: block; margin-bottom: 8px;">{{ __('common.current_image') }}:</label>
+                        <img id="edit_tour_current_image" src="" alt="Current image" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid var(--traveloka-border, #e4ecf7); object-fit: contain; background: #f8f9fa;">
+                    </div>
+                    <div id="edit_tour_new_image_preview" style="display: none;">
+                        <label style="font-size: 13px; color: var(--traveloka-muted, #6b7b93); font-weight: normal; display: block; margin-bottom: 8px;">{{ __('common.new_image_preview') }}:</label>
+                        <img id="edit_tour_new_image_preview_img" src="" alt="New image preview" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid var(--traveloka-border, #e4ecf7); object-fit: contain; background: #f8f9fa;">
+                    </div>
                 </div>
             </div>
         </form>

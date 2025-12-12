@@ -119,3 +119,5 @@ Nếu AWS SES đang ở **Sandbox mode**:
 1. Vào **AWS Console** > **SES** > **Account dashboard**
 2. Xem "Sending limits" - nếu thấy "Sandbox" nghĩa là đang ở Sandbox mode
 
+
+

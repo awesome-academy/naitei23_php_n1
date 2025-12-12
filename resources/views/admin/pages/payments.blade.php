@@ -39,7 +39,13 @@
                             @endphp
                             <span class="status-badge {{ $statusClass }}">{{ __("common.{$payment->status}") }}</span>
                         </td>
-                        <td>{{ optional($payment->payment_date)->format('d/m/Y H:i') }}</td>
+                        <td>
+                            @if($payment->payment_date)
+                                {{ $payment->payment_date->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr>

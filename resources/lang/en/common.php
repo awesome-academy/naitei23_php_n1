@@ -53,6 +53,8 @@ return [
     'image' => 'Image',
     'current_image' => 'Current Image',
     'new_image' => 'New Image',
+    'image_preview' => 'Image Preview',
+    'new_image_preview' => 'New Image Preview',
     'schedules' => 'Schedules',
     'rating' => 'Rating',
     'category' => 'Category',

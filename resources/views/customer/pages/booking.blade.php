@@ -110,6 +110,13 @@
     </div>
 </div>
 
+@php
+    // Get exchange rate from API or fallback to config
+    $exchangeRate = config('services.exchange_rate.enabled', true)
+        ? \App\Services\ExchangeRateService::getRate()
+        : config('services.stripe.vnd_to_usd_rate', 25000);
+@endphp
+
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -118,7 +125,7 @@
         const participantsCount = document.getElementById('participants-count');
         const totalPrice = document.getElementById('total-price');
         const usdAmount = document.getElementById('usd-amount');
-        const exchangeRate = {{ config('services.stripe.vnd_to_usd_rate', 25000) }};
+        const exchangeRate = {{ $exchangeRate }};
 
         function updatePrice() {
             const numParticipants = parseInt(numParticipantsInput.value) || 1;

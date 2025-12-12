@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Payment;
 use App\Models\TourSchedule;
+use App\Services\ExchangeRateService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -59,8 +60,12 @@ class BookingController extends Controller
         // Calculate total price in VND
         $totalPriceVND = $schedule->price * $validated['num_participants'];
 
-        // Convert VND to USD for Stripe (1 USD = ~25,000 VND, can be configured)
-        $exchangeRate = config('services.stripe.vnd_to_usd_rate', 25000);
+        // Get exchange rate from API or fallback to config
+        $exchangeRate = config('services.exchange_rate.enabled', true)
+            ? ExchangeRateService::getRate()
+            : config('services.stripe.vnd_to_usd_rate', 25000);
+        
+        // Convert VND to USD for Stripe
         $totalPriceUSD = $totalPriceVND / $exchangeRate;
 
         // Create booking
