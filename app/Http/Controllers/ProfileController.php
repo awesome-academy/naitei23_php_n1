@@ -34,7 +34,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('success', 'Cập nhật hồ sơ thành công!');
+        return Redirect::route('profile.edit')->with('success', __('common.profile_updated_successfully'));
     }
 
     /**
@@ -55,7 +55,7 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/')->with('success', 'Tài khoản đã được xóa thành công!');
+        return Redirect::to('/')->with('success', __('common.account_deleted_successfully'));
     }
 }
 

@@ -58,9 +58,9 @@ class SocialController extends Controller
             Auth::login($user, true);
 
             if ($isNewUser) {
-                session()->flash('success', 'Đăng ký bằng Facebook thành công!');
+                session()->flash('success', __('common.facebook_register_success'));
             } else {
-                session()->flash('success', 'Đăng nhập bằng Facebook thành công!');
+                session()->flash('success', __('common.facebook_login_success'));
             }
 
             $redirectTo = $request->session()->pull('facebook_redirect_to');

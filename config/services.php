@@ -42,4 +42,11 @@ return [
         'redirect' => env('FACEBOOK_REDIRECT_URL'),
     ],
 
+    'stripe' => [
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+        'vnd_to_usd_rate' => env('STRIPE_VND_TO_USD_RATE', 25000), // Default: 1 USD = 25,000 VND
+    ],
+
 ];

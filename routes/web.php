@@ -74,23 +74,47 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboard'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // Customer routes (public with rate limiting)
 Route::get('/categories', [\App\Http\Controllers\CustomerController::class, 'categories'])
     ->middleware('throttle:60,1')
     ->name('customer.categories');
-Route::get('/tours/{tour}', [\App\Http\Controllers\CustomerController::class, 'tours'])
-    ->middleware('throttle:60,1')
-    ->name('customer.tours');
+
+// Handle booking redirect from tour page with schedule parameter
+Route::get('/tours/{tour}', function (\App\Models\Tour $tour, \Illuminate\Http\Request $request) {
+    $scheduleId = $request->query('schedule');
+    if ($scheduleId) {
+        $schedule = \App\Models\TourSchedule::findOrFail($scheduleId);
+        if (auth()->check()) {
+            return redirect()->route('booking.show', $schedule);
+        } else {
+            return redirect()->route('login', ['redirectTo' => route('booking.show', $schedule)]);
+        }
+    }
+    return app(\App\Http\Controllers\CustomerController::class)->tours($tour);
+})->middleware('throttle:60,1')->name('customer.tours');
 Route::get('/tours/{tour}/details', [\App\Http\Controllers\CustomerController::class, 'tourDetails'])
     ->middleware('throttle:60,1')
     ->name('customer.tour.details');
 Route::get('/tours/{tour}/details/pdf', [\App\Http\Controllers\CustomerController::class, 'exportTourDetailsPdf'])
     ->middleware('throttle:60,1')
     ->name('customer.tour.details.pdf');
+
+// Booking routes (authenticated)
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/booking/{schedule}', [\App\Http\Controllers\BookingController::class, 'show'])->name('booking.show');
+    Route::post('/booking/{schedule}', [\App\Http\Controllers\BookingController::class, 'store'])->name('booking.store');
+    Route::get('/booking/{booking}/success', [\App\Http\Controllers\BookingController::class, 'success'])->name('booking.success');
+    Route::get('/booking/{booking}/cancel', [\App\Http\Controllers\BookingController::class, 'cancel'])->name('booking.cancel');
+});
+
+// Stripe webhook (optional - not required if using synchronous payment processing)
+// Route::post('/webhook/stripe', [\App\Http\Controllers\StripeWebhookController::class, 'handleWebhook'])
+//     ->middleware('web')
+//     ->name('webhook.stripe');
 
 Route::get('locale/{locale}', [LanguageController::class, 'changeLanguage'])->name('locale.switch');
 

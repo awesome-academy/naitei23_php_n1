@@ -17,6 +17,9 @@ class Payment extends Model
         'status',
         'transaction_id',
         'payment_date',
+        'stripe_payment_intent_id',
+        'stripe_session_id',
+        'stripe_metadata',
     ];
 
     protected $casts = [
