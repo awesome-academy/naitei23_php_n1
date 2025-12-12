@@ -7,6 +7,9 @@
             <div class="flash-message__content">
                 {{ session('success') }}
             </div>
+            <button type="button" class="flash-message__close" aria-label="Close" data-close-flash>
+                &times;
+            </button>
         </div>
     </div>
 @endif

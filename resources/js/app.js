@@ -35,11 +35,24 @@ Alpine.start();
                 }, { once: true });
             }, 1000);
 
-            // Allow user to dismiss earlier by click
-            message.addEventListener('click', () => {
+            // Allow user to dismiss earlier by click on message
+            message.addEventListener('click', (e) => {
+                // Don't trigger if clicking the close button (it has its own handler)
+                if (e.target.closest('.flash-message__close')) {
+                    return;
+                }
                 clearTimeout(hideTimeout);
                 message.classList.add('is-hiding');
             });
+
+            // Handle close button click
+            const closeButton = message.querySelector('[data-close-flash]');
+            if (closeButton) {
+                closeButton.addEventListener('click', () => {
+                    clearTimeout(hideTimeout);
+                    message.classList.add('is-hiding');
+                });
+            }
         });
     }
 
@@ -67,6 +80,9 @@ Alpine.start();
             <div class="flash-message__content">
                 ${message}
             </div>
+            <button type="button" class="flash-message__close" aria-label="Close" data-close-flash>
+                &times;
+            </button>
         `;
 
         // Add to container

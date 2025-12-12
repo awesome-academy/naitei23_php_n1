@@ -344,9 +344,16 @@ class AdminManagementController extends Controller
 
     public function payments()
     {
-        $payments = Payment::with(['booking.user'])
+        $payments = Payment::with(['booking.user', 'booking.tourSchedule.tour'])
             ->latest('payment_date')
             ->paginate(12);
+
+        // Check if there's a payment notification from webhook
+        if (session('payment_notification')) {
+            session()->flash('success', session('payment_notification_message', __('common.new_payment_notification')));
+            session()->forget('payment_notification');
+            session()->forget('payment_notification_message');
+        }
 
         return view('admin.pages.payments', compact('payments'));
     }
@@ -359,7 +366,7 @@ class AdminManagementController extends Controller
 
         // Check if there's a new review notification from session
         if (session('new_review_notification')) {
-            session()->flash('success', session('new_review_message', 'Đã thêm review/comment mới!'));
+            session()->flash('success', session('new_review_message', __('common.review_comment_created')));
             session()->forget('new_review_notification');
             session()->forget('new_review_message');
         }
@@ -375,7 +382,7 @@ class AdminManagementController extends Controller
 
         // Check if there's a new comment notification from session
         if (session('new_comment_notification')) {
-            session()->flash('success', session('new_comment_message', 'Đã thêm review/comment mới!'));
+            session()->flash('success', session('new_comment_message', __('common.review_comment_created')));
             session()->forget('new_comment_notification');
             session()->forget('new_comment_message');
         }

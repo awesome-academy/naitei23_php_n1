@@ -86,7 +86,7 @@ class CommentController extends Controller
         $comment->load('user');
 
         if (! $request->expectsJson()) {
-            $request->session()->flash('success', 'Đã cập nhật bình luận thành công!');
+            $request->session()->flash('success', __('common.comment_updated_successfully'));
 
             return redirect()->back();
         }
