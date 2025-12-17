@@ -3,7 +3,7 @@
 @section('title', __('common.payment_success'))
 
 @section('content')
-<div class="max-w-2xl mx-auto py-8 px-4">
+<div class="max-w-2xl mx-auto">
     <div class="glass-card rounded-3xl p-8 text-center">
         <div class="mb-6">
             <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="flex justify-between">
                     <span class="text-slate-600">{{ __('common.total_price') }}:</span>
-                    <span class="font-semibold text-orange-600">{{ number_format($payment->amount, 0, ',', '.') }} {{ __('common.vnd') }}</span>
+                    <span class="font-semibold text-sky-600">{{ number_format($payment->amount, 0, ',', '.') }} {{ __('common.vnd') }}</span>
                 </div>
                 <div class="flex justify-between">
                     <span class="text-slate-600">{{ __('common.transaction_id') }}:</span>
@@ -48,11 +48,23 @@
         </div>
         @endif
 
+        @if(isset($payment) && $payment && $payment->status === 'success')
+        <div class="mb-6">
+            <div class="flex justify-center">
+                <a href="{{ route('invoice.download', $payment) }}" 
+                   class="inline-flex items-center gap-2 bg-sky-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-sky-700 transition-colors shadow-sm">
+                    <i class="fas fa-file-pdf"></i>
+                    {{ __('common.download_pdf') }}
+                </a>
+            </div>
+        </div>
+        @endif
+
         <div class="flex gap-4 justify-center">
-            <a href="{{ route('dashboard') }}" class="bg-sky-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-sky-700 transition-colors">
+            <a href="{{ route('dashboard') }}" class="bg-sky-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-sky-700 transition-colors shadow-sm">
                 {{ __('common.go_to_dashboard') }}
             </a>
-            <a href="{{ route('home') }}" class="border border-slate-300 text-slate-700 px-6 py-3 rounded-lg font-semibold hover:bg-slate-50 transition-colors">
+            <a href="{{ route('home') }}" class="border border-slate-200 text-slate-700 px-6 py-3 rounded-lg font-semibold hover:bg-white hover:border-sky-300 transition-colors bg-white/50">
                 {{ __('common.back_to_home') }}
             </a>
         </div>

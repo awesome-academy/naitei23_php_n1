@@ -359,6 +359,50 @@ class AdminManagementController extends Controller
         return view('admin.pages.payments', compact('payments'));
     }
 
+    /**
+     * Download a single payment invoice PDF from admin panel.
+     *
+     * Admin can view/download invoice of any payment.
+     */
+    public function downloadPaymentInvoice(Payment $payment)
+    {
+        // Force English for invoice layout (same as customer)
+        app()->setLocale('en');
+
+        // Eager load relations used in invoice view
+        $payment->load(['booking.tourSchedule.tour', 'booking.user']);
+
+        $data = [
+            'payment' => $payment,
+            'booking' => $payment->booking,
+            'tour' => $payment->booking->tourSchedule->tour,
+            'tourSchedule' => $payment->booking->tourSchedule,
+            'customer' => $payment->booking->user,
+            'company' => [
+                'name' => config('app.name', 'Tour Booking System'),
+                'address' => config('app.company_address', '123 Main Street, City, Country'),
+                'phone' => config('app.company_phone', '+84 123 456 789'),
+                'email' => config('app.company_email', 'info@example.com'),
+                'tax_id' => config('app.company_tax_id', 'TAX-123456'),
+            ],
+        ];
+
+        $pdf = Pdf::loadView('customer.pdf.invoice', $data);
+        $pdf->setPaper('a4', 'portrait');
+        $pdf->setOption('enable-local-file-access', true);
+        $pdf->setOption('isRemoteEnabled', true);
+        $pdf->setOption('isHtml5ParserEnabled', true);
+        $pdf->setOption('isFontSubsettingEnabled', true);
+        $pdf->setOption('defaultFont', 'DejaVu Sans');
+        $pdf->setOption('enable-font-subsetting', true);
+        $pdf->setOption('isUnicode', true);
+        $pdf->setOption('dpi', 96);
+
+        $fileName = 'Invoice-' . ($payment->invoice_id ?? ('PAYMENT-' . $payment->id)) . '.pdf';
+
+        return $pdf->download($fileName);
+    }
+
     public function reviews()
     {
         $reviews = Review::with(['user', 'tour'])

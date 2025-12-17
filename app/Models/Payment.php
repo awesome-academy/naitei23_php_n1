@@ -20,6 +20,8 @@ class Payment extends Model
         'stripe_payment_intent_id',
         'stripe_session_id',
         'stripe_metadata',
+        'invoice_id',
+        'pdf_path',
     ];
 
     protected $casts = [
@@ -30,6 +32,32 @@ class Payment extends Model
     public function booking(): BelongsTo
     {
         return $this->belongsTo(Booking::class, 'booking_id');
+    }
+
+    /**
+     * Generate unique invoice ID
+     */
+    public static function generateInvoiceId(): string
+    {
+        do {
+            $invoiceId = 'INV-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -6));
+        } while (self::where('invoice_id', $invoiceId)->exists());
+
+        return $invoiceId;
+    }
+
+    /**
+     * Boot method to auto-generate invoice_id when payment is created
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($payment) {
+            if (empty($payment->invoice_id)) {
+                $payment->invoice_id = self::generateInvoiceId();
+            }
+        });
     }
 }
 

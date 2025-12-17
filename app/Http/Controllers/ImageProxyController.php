@@ -14,10 +14,31 @@ class ImageProxyController extends Controller
     public function proxy(Request $request, string $path)
     {
         try {
-            // Decode the path
-            $decodedPath = base64_decode($path);
-            
-            if (!$decodedPath || !str_starts_with($decodedPath, 'images/')) {
+            // Decode the path in strict mode and validate
+            $decodedPath = base64_decode($path, true);
+
+            // Must be a non-empty string
+            if (!is_string($decodedPath) || $decodedPath === '') {
+                abort(404);
+            }
+
+            // Must start with the expected prefix
+            if (!str_starts_with($decodedPath, 'images/')) {
+                abort(404);
+            }
+
+            // Prevent path traversal and disallow dangerous characters
+            if (
+                str_contains($decodedPath, '..') ||
+                str_starts_with($decodedPath, '/') ||
+                str_starts_with($decodedPath, '\\') ||
+                preg_match('/[\x00-\x1F]/', $decodedPath)
+            ) {
+                abort(404);
+            }
+
+            // Enforce an allow-list of characters in the path
+            if (!preg_match('#^images/[A-Za-z0-9_\-./]+$#', $decodedPath)) {
                 abort(404);
             }
 
@@ -31,10 +52,10 @@ class ImageProxyController extends Controller
                     ->header('Cache-Control', 'public, max-age=31536000');
             }
 
-            // Try S3
-            $s3Configured = !empty(env('AWS_ACCESS_KEY_ID')) && 
-                           !empty(env('AWS_SECRET_ACCESS_KEY')) && 
-                           !empty(env('AWS_BUCKET'));
+            // Try S3 (configuration read via config, not env())
+            $s3Configured = !empty(config('filesystems.disks.s3.key')) &&
+                           !empty(config('filesystems.disks.s3.secret')) &&
+                           !empty(config('filesystems.disks.s3.bucket'));
             
             if ($s3Configured && Storage::disk('s3')->exists($decodedPath)) {
                 $file = Storage::disk('s3')->get($decodedPath);

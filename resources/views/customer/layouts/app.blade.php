@@ -16,17 +16,17 @@
 
     @stack('styles')
 </head>
-<body class="font-sans antialiased">
+<body class="min-h-screen traveloka-gradient antialiased">
     @include('components.flash-message')
     @include('customer.components.header')
 
     @yield('hero')
 
-    <main class="main-content">
-        @yield('content')
+    <main class="main-content py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            @yield('content')
+        </div>
     </main>
-
-    @include('customer.components.footer')
 
     @stack('scripts')
 </body>

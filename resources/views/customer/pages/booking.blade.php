@@ -3,7 +3,7 @@
 @section('title', __('common.book_tour'))
 
 @section('content')
-<div class="max-w-4xl mx-auto py-8 px-4">
+<div class="max-w-4xl mx-auto">
     <div class="glass-card rounded-3xl p-8">
         <h1 class="text-3xl font-bold text-slate-800 mb-6">{{ __('common.book_tour') }}</h1>
 
@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <span class="text-slate-500">{{ __('common.price_per_person') }}:</span>
-                    <span class="font-semibold text-orange-600 ml-2">{{ number_format($schedule->price, 0, ',', '.') }} {{ __('common.vnd') }}</span>
+                    <span class="font-semibold text-sky-600 ml-2">{{ number_format($schedule->price, 0, ',', '.') }} {{ __('common.vnd') }}</span>
                 </div>
                 <div>
                     <span class="text-slate-500">{{ __('common.available_slots') }}:</span>
@@ -81,10 +81,10 @@
                     <span class="font-semibold text-slate-800" id="participants-count">1</span>
                 </div>
                 <div class="border-t border-sky-200 pt-4 mt-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-lg font-semibold text-slate-800">{{ __('common.total_price') }}:</span>
-                        <span class="text-2xl font-bold text-orange-600" id="total-price">{{ number_format($schedule->price, 0, ',', '.') }} {{ __('common.vnd') }}</span>
-                    </div>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-lg font-semibold text-slate-800">{{ __('common.total_price') }}:</span>
+                    <span class="text-2xl font-bold text-sky-600" id="total-price">{{ number_format($schedule->price, 0, ',', '.') }} {{ __('common.vnd') }}</span>
+                </div>
                     <div class="text-xs text-slate-500 text-right mt-1" id="usd-equivalent">
                         (≈ $<span id="usd-amount">0</span> USD)
                     </div>

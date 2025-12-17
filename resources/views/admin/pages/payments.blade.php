@@ -21,6 +21,7 @@
                     <th>{{ __('common.payment_method') }}</th>
                     <th>{{ __('common.status') }}</th>
                     <th>{{ __('common.payment_date') }}</th>
+                    <th>{{ __('common.invoice') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,6 +47,15 @@
                                 N/A
                             @endif
                         </td>
+                        <td>
+                            @if($payment->invoice_id)
+                                <a href="{{ route('admin.payments.invoice', $payment) }}" class="btn btn-sm btn-primary" target="_blank">
+                                    {{ __('common.download_pdf') }}
+                                </a>
+                            @else
+                                <span class="text-xs text-gray-400">N/A</span>
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr>
@@ -60,4 +70,3 @@
         </div>
     </div>
 @endsection
-
