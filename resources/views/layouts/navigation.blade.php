@@ -10,6 +10,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('common.dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('payment.history')" :active="request()->routeIs('payment.history')">
+                        {{ __('common.payment_history') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.*')">
                         {{ __('common.profile') }}
                     </x-nav-link>
@@ -84,6 +87,9 @@
         <div class="pt-2 pb-3 space-y-1 px-4">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('common.dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('payment.history')" :active="request()->routeIs('payment.history')">
+                {{ __('common.payment_history') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.*')">
                 {{ __('common.profile') }}

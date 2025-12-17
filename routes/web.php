@@ -54,7 +54,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('tours', [AdminManagementController::class, 'storeTour'])->name('tours.store');
         Route::put('tours/{tour}', [AdminManagementController::class, 'updateTour'])->name('tours.update');
         Route::delete('tours/{tour}', [AdminManagementController::class, 'deleteTour'])->name('tours.delete');
-        
+
         // Tour Schedules CRUD (lịch trình cụ thể)
         Route::get('tour-schedules', [AdminManagementController::class, 'tourSchedules'])->name('tour-schedules');
         Route::post('tour-schedules', [AdminManagementController::class, 'storeTourSchedule'])->name('tour-schedules.store');
@@ -64,6 +64,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('bookings', [AdminManagementController::class, 'bookings'])->name('bookings');
         Route::get('bookings/export/pdf', [AdminManagementController::class, 'exportBookingsPdf'])->name('bookings.export.pdf');
         Route::get('payments', [AdminManagementController::class, 'payments'])->name('payments');
+        Route::get('payments/{payment}/invoice', [AdminManagementController::class, 'downloadPaymentInvoice'])->name('payments.invoice');
         Route::get('reviews', [AdminManagementController::class, 'reviews'])->name('reviews');
         Route::get('comments', [AdminManagementController::class, 'comments'])->name('comments');
         
@@ -77,6 +78,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboard'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+// Image proxy route (to serve S3 images when bucket is not public)
+Route::get('/image/{path}', [\App\Http\Controllers\ImageProxyController::class, 'proxy'])
+    ->where('path', '.*')
+    ->name('image.proxy');
 
 // Customer routes (public with rate limiting)
 Route::get('/categories', [\App\Http\Controllers\CustomerController::class, 'categories'])
@@ -129,6 +135,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // Payment History & Invoice routes
+    Route::get('/payment-history', [\App\Http\Controllers\PaymentHistoryController::class, 'index'])->name('payment.history');
+    Route::get('/invoice/{payment}/download', [\App\Http\Controllers\InvoiceController::class, 'download'])->name('invoice.download');
     
     // Review routes
     Route::post('/tours/{tour}/reviews', [ReviewController::class, 'store'])->name('reviews.store');

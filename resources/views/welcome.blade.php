@@ -445,7 +445,7 @@
                         <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
                             @if($schedule->tour->image_url)
                                 <div class="h-48 overflow-hidden">
-                                    <img src="{{ Str::startsWith($schedule->tour->image_url, ['http://', 'https://']) ? $schedule->tour->image_url : asset($schedule->tour->image_url) }}" 
+                                    <img src="{{ $schedule->tour->image_url }}" 
                                          alt="{{ $schedule->tour->name }}"
                                          width="400" 
                                          height="192"

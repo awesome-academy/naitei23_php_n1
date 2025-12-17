@@ -359,6 +359,50 @@ class AdminManagementController extends Controller
         return view('admin.pages.payments', compact('payments'));
     }
 
+    /**
+     * Download a single payment invoice PDF from admin panel.
+     *
+     * Admin can view/download invoice of any payment.
+     */
+    public function downloadPaymentInvoice(Payment $payment)
+    {
+        // Force English for invoice layout (same as customer)
+        app()->setLocale('en');
+
+        // Eager load relations used in invoice view
+        $payment->load(['booking.tourSchedule.tour', 'booking.user']);
+
+        $data = [
+            'payment' => $payment,
+            'booking' => $payment->booking,
+            'tour' => $payment->booking->tourSchedule->tour,
+            'tourSchedule' => $payment->booking->tourSchedule,
+            'customer' => $payment->booking->user,
+            'company' => [
+                'name' => config('app.name', 'Tour Booking System'),
+                'address' => config('app.company_address', '123 Main Street, City, Country'),
+                'phone' => config('app.company_phone', '+84 123 456 789'),
+                'email' => config('app.company_email', 'info@example.com'),
+                'tax_id' => config('app.company_tax_id', 'TAX-123456'),
+            ],
+        ];
+
+        $pdf = Pdf::loadView('customer.pdf.invoice', $data);
+        $pdf->setPaper('a4', 'portrait');
+        $pdf->setOption('enable-local-file-access', true);
+        $pdf->setOption('isRemoteEnabled', true);
+        $pdf->setOption('isHtml5ParserEnabled', true);
+        $pdf->setOption('isFontSubsettingEnabled', true);
+        $pdf->setOption('defaultFont', 'DejaVu Sans');
+        $pdf->setOption('enable-font-subsetting', true);
+        $pdf->setOption('isUnicode', true);
+        $pdf->setOption('dpi', 96);
+
+        $fileName = 'Invoice-' . ($payment->invoice_id ?? ('PAYMENT-' . $payment->id)) . '.pdf';
+
+        return $pdf->download($fileName);
+    }
+
     public function reviews()
     {
         $reviews = Review::with(['user', 'tour'])
@@ -500,6 +544,37 @@ class AdminManagementController extends Controller
                 \Log::error('Failed to delete image from S3: ' . $e->getMessage());
             }
         }
+
+        // Fallback to local storage
+        try {
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+                \Log::info('Image deleted from local storage: ' . $path);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Failed to delete image from local storage: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Get the full URL for an image stored in S3.
+     *
+     * @param string|null $path The S3 path to the image
+     * @return string|null The full URL to the image, or null if path is empty
+     */
+    public static function getImageUrl(?string $path): ?string
+    {
+        if (!$path) {
+            return null;
+        }
+
+        // If path already contains http/https, return as is (for backward compatibility)
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        // Get URL from S3
+        return Storage::disk('s3')->url($path);
     }
 
     /**

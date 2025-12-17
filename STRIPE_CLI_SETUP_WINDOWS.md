@@ -70,3 +70,5 @@ Nếu không muốn cài Stripe CLI, bạn có thể dùng ngrok:
 - Với ngrok, mỗi lần restart sẽ có URL mới, cần cập nhật lại trong Stripe Dashboard
 - Stripe CLI ổn định hơn cho development vì có thể forward events tự động
 
+
+

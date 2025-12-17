@@ -41,8 +41,9 @@
                             <td style="text-align: center;">{{ $category->id }}</td>
                             <td style="text-align: center;">
                                 @if($category->image_url)
-                                    <img src="{{ asset($category->image_url) }}" alt="{{ $category->name }}"
-                                         style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
+                                    <img src="{{ $category->image_url }}" alt="{{ $category->name }}"
+                                         style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;"
+                                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%23e0e0e0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23999\' font-size=\'10\'%3ENo Image%3C/text%3E%3C/svg%3E'; this.style.backgroundColor='#f0f0f0';">
                                 @else
                                     <span style="color: var(--traveloka-muted);">-</span>
                                 @endif
@@ -104,6 +105,11 @@
             const form = document.getElementById('categoryForm');
             if (form) {
                 form.reset();
+                // Reset preview
+                const preview = document.getElementById('category_image_preview');
+                if (preview) {
+                    preview.style.display = 'none';
+                }
             }
         }
     }
@@ -127,6 +133,48 @@
                 deleteCategory(categoryId);
             });
         });
+
+        // Image preview for Add Category modal
+        const categoryImageInput = document.getElementById('category_image_input');
+        if (categoryImageInput) {
+            categoryImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('category_image_preview');
+                const previewImg = document.getElementById('category_image_preview_img');
+                
+                if (file && preview && previewImg) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else if (preview) {
+                    preview.style.display = 'none';
+                }
+            });
+        }
+
+        // Image preview for Edit Category modal
+        const editCategoryImageInput = document.getElementById('edit_category_image_input');
+        if (editCategoryImageInput) {
+            editCategoryImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('edit_category_new_image_preview');
+                const previewImg = document.getElementById('edit_category_new_image_preview_img');
+                
+                if (file && preview && previewImg) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else if (preview) {
+                    preview.style.display = 'none';
+                }
+            });
+        }
     });
 
     function editCategory(id, name, slug, description, imageUrl) {
@@ -148,13 +196,30 @@
             form.action = `/admin/categories/${id}`;
         }
 
+        // Reset new image preview
+        const newImagePreview = document.getElementById('edit_category_new_image_preview');
+        if (newImagePreview) {
+            newImagePreview.style.display = 'none';
+        }
+        const editImageInput = document.getElementById('edit_category_image_input');
+        if (editImageInput) {
+            editImageInput.value = '';
+        }
+
+        // Show current image
+        const currentImageContainer = document.getElementById('edit_category_current_image_container');
         const img = document.getElementById('edit_category_current_image');
-        if (img) {
-            if (imageUrl) {
-                img.src = `/${imageUrl}`;
-                img.style.display = 'block';
+        if (img && currentImageContainer) {
+            if (imageUrl && imageUrl !== '' && imageUrl !== 'null') {
+                // Use full URL if it's already a URL, otherwise use proxy route
+                if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                    img.src = imageUrl;
+                } else {
+                    img.src = imageUrl.startsWith('/') ? imageUrl : '/' + imageUrl;
+                }
+                currentImageContainer.style.display = 'block';
             } else {
-                img.style.display = 'none';
+                currentImageContainer.style.display = 'none';
             }
         }
     }

@@ -24,7 +24,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @if($tour->image_url)
             <div>
-                <img src="{{ asset($tour->image_url) }}" alt="{{ $tour->name }}" 
+                <img src="{{ $tour->image_url }}" alt="{{ $tour->name }}" 
                      class="w-full h-64 object-cover rounded-lg">
             </div>
             @endif

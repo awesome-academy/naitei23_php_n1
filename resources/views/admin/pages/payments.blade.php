@@ -21,6 +21,7 @@
                     <th>{{ __('common.payment_method') }}</th>
                     <th>{{ __('common.status') }}</th>
                     <th>{{ __('common.payment_date') }}</th>
+                    <th>{{ __('common.invoice') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,7 +40,22 @@
                             @endphp
                             <span class="status-badge {{ $statusClass }}">{{ __("common.{$payment->status}") }}</span>
                         </td>
-                        <td>{{ optional($payment->payment_date)->format('d/m/Y H:i') }}</td>
+                        <td>
+                            @if($payment->payment_date)
+                                {{ $payment->payment_date->setTimezone('Asia/Ho_Chi_Minh')->format('d/m/Y H:i') }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        <td>
+                            @if($payment->invoice_id)
+                                <a href="{{ route('admin.payments.invoice', $payment) }}" class="btn btn-sm btn-primary" target="_blank">
+                                    {{ __('common.download_pdf') }}
+                                </a>
+                            @else
+                                <span class="text-xs text-gray-400">N/A</span>
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr>
@@ -54,4 +70,3 @@
         </div>
     </div>
 @endsection
-

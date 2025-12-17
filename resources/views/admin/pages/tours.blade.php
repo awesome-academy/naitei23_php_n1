@@ -47,7 +47,7 @@
                             <td style="text-align: center;">{{ $tour->id }}</td>
                             <td style="text-align: center;">
                                 @if($tour->image_url)
-                                    <img src="{{ asset($tour->image_url) }}" alt="{{ $tour->name }}" 
+                                    <img src="{{ $tour->image_url }}" alt="{{ $tour->name }}" 
                                          style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
                                 @else
                                     <span style="color: var(--traveloka-muted);">-</span>
@@ -119,6 +119,11 @@
             const form = document.getElementById('tourForm');
             if (form) {
                 form.reset();
+                // Reset preview
+                const preview = document.getElementById('tour_image_preview');
+                if (preview) {
+                    preview.style.display = 'none';
+                }
             }
         } else {
             console.error('Tour modal not found');
@@ -148,6 +153,48 @@
                 deleteTour(tourId);
             });
         });
+
+        // Image preview for Add Tour modal
+        const tourImageInput = document.getElementById('tour_image_input');
+        if (tourImageInput) {
+            tourImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('tour_image_preview');
+                const previewImg = document.getElementById('tour_image_preview_img');
+                
+                if (file && preview && previewImg) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else if (preview) {
+                    preview.style.display = 'none';
+                }
+            });
+        }
+
+        // Image preview for Edit Tour modal
+        const editTourImageInput = document.getElementById('edit_tour_image_input');
+        if (editTourImageInput) {
+            editTourImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('edit_tour_new_image_preview');
+                const previewImg = document.getElementById('edit_tour_new_image_preview_img');
+                
+                if (file && preview && previewImg) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else if (preview) {
+                    preview.style.display = 'none';
+                }
+            });
+        }
     });
 
     // Edit Tour
@@ -182,13 +229,30 @@
         }
         form.action = `/admin/tours/${id}`;
         
+        // Reset new image preview
+        const newImagePreview = document.getElementById('edit_tour_new_image_preview');
+        if (newImagePreview) {
+            newImagePreview.style.display = 'none';
+        }
+        const editImageInput = document.getElementById('edit_tour_image_input');
+        if (editImageInput) {
+            editImageInput.value = '';
+        }
+
+        // Show current image
+        const currentImageContainer = document.getElementById('edit_tour_current_image_container');
         const img = document.getElementById('edit_tour_current_image');
-        if (img) {
+        if (img && currentImageContainer) {
             if (imageUrl && imageUrl !== '' && imageUrl !== 'null') {
-                img.src = `/${imageUrl}`;
-                img.style.display = 'block';
+                // Use full URL if it's already a URL, otherwise use proxy route
+                if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+                    img.src = imageUrl;
+                } else {
+                    img.src = imageUrl.startsWith('/') ? imageUrl : '/' + imageUrl;
+                }
+                currentImageContainer.style.display = 'block';
             } else {
-                img.style.display = 'none';
+                currentImageContainer.style.display = 'none';
             }
         }
     }
