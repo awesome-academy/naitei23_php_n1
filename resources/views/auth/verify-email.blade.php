@@ -1,4 +1,8 @@
 <x-guest-layout>
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang thông báo xác thực email sau khi đăng ký.
+        - Cho phép gửi lại link xác thực qua route `verification.send`.
+    --}}
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">

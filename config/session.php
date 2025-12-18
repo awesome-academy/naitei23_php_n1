@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình session (driver, lifetime, cookie, same-site, bảo mật...) cho ứng dụng.
+// Ghi chú: cấu hình `SESSION_DRIVER` và `SESSION_LIFETIME` phù hợp với nhu cầu bảo mật và UX.
 use Illuminate\Support\Str;
 
 return [

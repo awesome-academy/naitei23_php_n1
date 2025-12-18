@@ -7,6 +7,11 @@
 @section('page-title', __('common.payments'))
 
 @section('content')
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang lịch sử thanh toán của khách hàng (admin view).
+        - Cột `invoice` cho phép tải PDF nếu có `invoice_id`.
+        - Kiểm tra timezone khi hiển thị `payment_date` để tránh nhầm lẫn.
+    --}}
     <div class="table-wrapper">
         <div class="table-head">
             <div class="table-title">{{ __('common.payment_history') }}</div>

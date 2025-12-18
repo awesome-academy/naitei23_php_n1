@@ -1,4 +1,8 @@
 <x-guest-layout>
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang đăng ký tài khoản mới.
+        - Kiểm tra validation kỹ để tránh tạo tài khoản trùng hoặc sai định dạng email.
+    --}}
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">

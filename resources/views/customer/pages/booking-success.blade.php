@@ -1,5 +1,9 @@
 @extends('customer.layouts.app')
 
+{{-- Ghi chú (Tiếng Việt):
+    - Trang hiển thị khi thanh toán thành công.
+    - Bao gồm thông tin booking + các hành động tiếp theo (tải hóa đơn, xem booking).
+--}}
 @section('title', __('common.payment_success'))
 
 @section('content')

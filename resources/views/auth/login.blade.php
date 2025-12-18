@@ -1,4 +1,8 @@
 <x-guest-layout>
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang đăng nhập chung cho người dùng (customer).
+        - Nếu có tham số `redirectTo`, form sẽ gửi kèm để chuyển hướng sau khi đăng nhập.
+    --}}
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">

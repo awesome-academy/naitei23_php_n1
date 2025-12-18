@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình kết nối cơ sở dữ liệu (MySQL, SQLite, Redis, ...).
+// Ghi chú: các thông tin nhạy cảm (DB_PASSWORD, DB_USERNAME) phải nằm trong `.env`.
 use Illuminate\Support\Str;
 
 return [

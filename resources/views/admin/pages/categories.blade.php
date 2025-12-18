@@ -7,6 +7,11 @@
 @section('page-title', __('common.tour_categories'))
 
 @section('content')
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang quản lý danh mục tour (categories).
+        - Phần script phía dưới chứa nhiều logic DOM (mở modal, preview ảnh, edit/delete).
+        - Có thể refactor sang JS dùng chung để tái sử dụng và giảm duplicate.
+    --}}
     <div style="margin-bottom: 20px;">
         <button class="btn btn-primary" onclick="openCategoryModal()">
             <i class="fas fa-plus"></i> {{ __('common.add_new_category') }}

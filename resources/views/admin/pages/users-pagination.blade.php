@@ -1,4 +1,8 @@
 @if ($users->hasPages())
+    {{-- Ghi chú (Tiếng Việt):
+        - Partial phân trang cho danh sách users.
+        - Sử dụng trong `users-table-wrapper` để render summary + links.
+    --}}
     @php
         $currentPage = $users->currentPage();
         $lastPage = $users->lastPage();

@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình broadcast (websocket / real-time event) cho ứng dụng.
+// Ghi chú: bật chế độ broadcast khi cần realtime; cấu hình key/cluster qua `.env`.
 return [
     /*
     |--------------------------------------------------------------------------

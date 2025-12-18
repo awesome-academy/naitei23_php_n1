@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình gửi mail cho ứng dụng (mailer mặc định, from address, markdown...).
+// Ghi chú: mặc định đang dùng SES; kiểm tra biến môi trường AWS trong `.env`.
 return [
     /*
     |--------------------------------------------------------------------------

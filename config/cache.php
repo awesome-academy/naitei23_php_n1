@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình cache cho ứng dụng (driver mặc định, các store, prefix key...).
+// Ghi chú: chọn driver phù hợp môi trường (file cho dev, redis/memcached cho production).
 use Illuminate\Support\Str;
 
 return [

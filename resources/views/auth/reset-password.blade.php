@@ -1,4 +1,8 @@
 <x-guest-layout>
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang đặt lại mật khẩu (sử dụng token truyền qua URL).
+        - Form gửi về `password.store` để cập nhật mật khẩu mới cho user.
+    --}}
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">

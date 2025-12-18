@@ -1,5 +1,9 @@
 @extends('customer.layouts.app')
 
+{{-- Ghi chú (Tiếng Việt):
+    - Trang thông báo khi thanh toán/cập nhật đặt chỗ bị hủy.
+    - Thông thường sẽ cung cấp hướng dẫn liên hệ hoặc thử lại thao tác.
+--}}
 @section('title', __('common.payment_cancelled'))
 
 @section('content')

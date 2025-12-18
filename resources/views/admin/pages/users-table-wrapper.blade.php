@@ -1,3 +1,7 @@
+{{-- Ghi chú (Tiếng Việt):
+    - Wrapper cho bảng người dùng và phân trang.
+    - Tách table và pagination sang partials để tiện render lại bằng AJAX.
+--}}
 <table class="admin-table" id="users-table">
     <thead>
         <tr>

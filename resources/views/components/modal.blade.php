@@ -1,5 +1,11 @@
 @props(['name', 'show' => false, 'maxWidth' => '2xl'])
 
+{{-- Ghi chú (Tiếng Việt):
+    - Component modal dùng Alpine.js để điều khiển hiển thị modal.
+    - Sử dụng event `open-modal`/`close-modal` để điều khiển từ JS hoặc các component khác.
+    - Nếu muốn dùng modal thuần JS, cân nhắc tách logic JS riêng (ví dụ `ui-helpers.js`).
+--}}
+
 @php
     $id = $name instanceof \Illuminate\Support\HtmlString ? md5($name) : $name;
     $id ??= md5($attributes->wire('model'));

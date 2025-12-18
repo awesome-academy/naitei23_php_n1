@@ -7,6 +7,10 @@
 @section('page-title', __('common.admin_dashboard'))
 
 @section('content')
+    {{-- Ghi chú (Tiếng Việt):
+        - Dashboard admin hiển thị các thẻ thống kê và bảng tóm tắt dữ liệu.
+        - Các `statCards` được truyền từ controller để tái sử dụng component thống kê.
+    --}}
     <div class="grid grid-3" data-dashboard-stats>
         @foreach ($statCards as $card)
             <div class="tile stat-card">

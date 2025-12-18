@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+{{--
+    Ghi chú (Tiếng Việt):
+    - Layout `guest` dùng cho các trang auth và landing không cần navigation chính.
+    - Giữ tối giản để tập trung vào nội dung auth/marketing.
+--}}
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">

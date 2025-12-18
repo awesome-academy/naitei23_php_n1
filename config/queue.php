@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình hệ thống queue (hàng đợi) cho ứng dụng: driver, kết nối, failed jobs.
+// Ghi chú: dùng `sync` cho dev, chuyển sang `redis`/`sqs` cho production nếu cần xử lý bất đồng bộ.
 return [
     /*
     |--------------------------------------------------------------------------

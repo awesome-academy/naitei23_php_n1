@@ -1,3 +1,8 @@
+{{--
+    Ghi chú (Tiếng Việt):
+    - Trang profile edit cho phép người dùng cập nhật thông tin, đổi mật khẩu và xóa tài khoản.
+    - Các phần chức năng đã tách thành partials trong `profile.partials` để dễ bảo trì.
+--}}
 <x-app-layout>
     @if(session('welcome_message'))
         <div id="welcome-banner"

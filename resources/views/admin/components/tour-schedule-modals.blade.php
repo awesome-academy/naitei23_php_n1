@@ -1,5 +1,9 @@
 
 <!-- Tour Schedule Modal -->
+{{-- Ghi chú (Tiếng Việt):
+    - Modal quản lý lịch trình tour (thêm / sửa).
+    - Trường nhập ngày/giờ cần validate ở server; có thể bổ sung datepicker phía client.
+--}}
 <div id="tourScheduleModal" class="modal" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">

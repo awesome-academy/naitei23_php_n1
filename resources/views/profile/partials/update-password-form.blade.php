@@ -1,3 +1,7 @@
+{{-- Ghi chú (Tiếng Việt):
+    - Partial cập nhật mật khẩu.
+    - Kiểm tra validation và dùng session('status') để hiển thị thông báo thành công.
+--}}
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">

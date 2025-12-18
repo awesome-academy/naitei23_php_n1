@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình xác thực (auth) cho ứng dụng: guards, providers, reset mật khẩu...
+// Ghi chú: thông tin kết nối/driver nên cấu hình qua `.env` nếu cần thay đổi cho từng môi trường.
 return [
     /*
     |--------------------------------------------------------------------------

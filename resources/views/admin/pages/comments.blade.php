@@ -7,6 +7,10 @@
 @section('page-title', __('common.comments'))
 
 @section('content')
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang hiển thị bình luận gần đây (comment) từ người dùng.
+        - `commentable_type` được rút gọn để admin dễ nhận dạng đối tượng liên quan.
+    --}}
     <div class="table-wrapper">
         <div class="table-head">
             <div class="table-title">{{ __('common.recent_comments') }}</div>

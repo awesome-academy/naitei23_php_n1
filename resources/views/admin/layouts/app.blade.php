@@ -7,7 +7,7 @@
 
         <title>@yield('page-title', 'Traveloka Admin')</title>
 
-        @vite(['resources/css/admin.css', 'resources/js/admin.js'])
+        @vite(['resources/css/admin.css', 'resources/js/admin.js', 'resources/js/admin-modal.js'])
         @stack('styles')
     </head>
     <body>
