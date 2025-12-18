@@ -329,3 +329,75 @@ Nếu bạn phát hiện lỗ hổng bảo mật trong Laravel, vui lòng gửi 
 ## Giấy Phép
 
 Framework Laravel là phần mềm mã nguồn mở được cấp phép theo [giấy phép MIT](https://opensource.org/licenses/MIT).
+
+## Lấy API Keys và thiết lập dịch vụ bên thứ ba
+
+Hướng dẫn ngắn cho đồng nghiệp để lấy các API keys phổ biến cần cho dự án.
+
+- Facebook (Login / Social):
+  1. Truy cập https://developers.facebook.com/ và đăng nhập.
+  2. Tạo App mới (My Apps → Create App) và chọn loại ứng dụng phù hợp.
+  3. Trong App Dashboard, thêm sản phẩm Facebook Login, cấu hình OAuth redirect (ví dụ: `http://localhost/auth/facebook/callback`).
+  4. Lấy `App ID` và `App Secret` → điền vào `FACEBOOK_CLIENT_ID` / `FACEBOOK_CLIENT_SECRET` trong `.env`.
+  5. Tài liệu: https://developers.facebook.com/docs/facebook-login/
+
+- Google (OAuth 2.0):
+  1. Vào Google Cloud Console: https://console.developers.google.com/
+  2. Tạo Project hoặc chọn project hiện có.
+  3. Bật API cần thiết và tạo Credentials → OAuth 2.0 Client IDs.
+  4. Đặt Authorized redirect URIs (ví dụ `http://localhost/auth/google/callback`).
+  5. Lấy `Client ID` và `Client Secret` → điền vào `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`.
+  6. Tài liệu: https://developers.google.com/identity/protocols/oauth2
+
+- AWS (S3 và SES):
+  1. Sign in to AWS Console: https://console.aws.amazon.com/
+  2. Tạo IAM user dành cho ứng dụng (IAM → Users → Add user) với programmatic access.
+     - Gán quyền tối thiểu: ví dụ `AmazonS3FullAccess` (hoặc custom policy cho bucket cụ thể) và `AmazonSESFullAccess` nếu cần gửi mail.
+     - Sau khi tạo, lưu `Access Key ID` và `Secret Access Key` → điền vào `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY`.
+  3. S3: tạo bucket (S3 → Create bucket), cấu hình region và quyền.
+     - Tài liệu: https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html
+  4. SES: verify domain hoặc email trước khi gửi mail.
+     - Tài liệu SES setup: https://docs.aws.amazon.com/ses/latest/DeveloperGuide/setting-up.html
+
+- Lưu ý bảo mật cho AWS keys:
+  - Không sử dụng root account keys.
+  - Tạo IAM user với quyền tối thiểu cần thiết.
+  - Nếu có thể, dùng IAM Roles trên server thay vì lưu keys cứng.
+
+## Hướng dẫn các bước nhanh (migrate / seed / factory)
+
+1. Copy file môi trường và tạo app key:
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+2. Cập nhật các biến môi trường (DB, MAIL, AWS, OAuth) trong `.env`.
+
+3. Chạy migration và seed dữ liệu mẫu:
+
+```bash
+php artisan migrate
+# Hoặc chạy sạch + seed (development)
+php artisan migrate:fresh --seed
+```
+
+4. Nếu cần chạy seeders/factories cụ thể:
+
+```bash
+php artisan db:seed --class=SpecificSeederClass
+```
+
+5. Chạy server:
+
+```bash
+php artisan serve
+npm run dev
+```
+
+## Ghi chú bảo mật
+
+- Tuyệt đối không commit file `.env` chứa secrets vào Git.
+- Sử dụng `.env.example` (có trong repo) để chia sẻ cấu hình mẫu.
+- Đối với AWS, tạo IAM user riêng với quyền tối thiểu; kiểm soát ai có access key.
