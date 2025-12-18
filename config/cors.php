@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình CORS (Cross-Origin Resource Sharing) cho API / frontend.
+// Ghi chú: cấu hình `allowed_origins` cẩn trọng trên production để tránh lộ API.
 return [
     /*
     |--------------------------------------------------------------------------

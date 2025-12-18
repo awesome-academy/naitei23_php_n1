@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình chung cho ứng dụng Laravel (tên app, môi trường, provider, alias, đa ngôn ngữ...).
+// Ghi chú: đặt các biến nhạy cảm trong file `.env` (không commit vào git). Kiểm tra `APP_URL` và `APP_KEY` khi deploy.
 return [
     /*
     |--------------------------------------------------------------------------

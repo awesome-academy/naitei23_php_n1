@@ -1,4 +1,10 @@
 <x-guest-layout>
+    {{--
+        Ghi chú (Tiếng Việt):
+        - Đây là trang đăng nhập cho khu vực admin.
+        - Chỉ cho phép tài khoản có quyền admin đăng nhập.
+        - Các validation và thông báo lỗi sẽ hiển thị ngay phía dưới.
+    --}}
     <div class="mb-6 text-center">
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">{{ __('common.admin_login') }}</h1>
         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
@@ -6,6 +12,7 @@
         </p>
     </div>
 
+    {{-- Hiển thị danh sách lỗi validation (nếu có) để admin dễ sửa thông tin --}}
     @if ($errors->any())
         <div class="mb-4 rounded border border-red-300 bg-red-50 p-3 text-sm text-red-700 dark:border-red-700 dark:bg-red-900/20 dark:text-red-200">
             <ul class="list-disc space-y-1 pl-5">
@@ -16,6 +23,7 @@
         </div>
     @endif
 
+    {{-- Form đăng nhập admin: gửi về route `admin.login.store` để xử lý xác thực --}}
     <form method="POST" action="{{ route('admin.login.store') }}" class="space-y-4">
         @csrf
 

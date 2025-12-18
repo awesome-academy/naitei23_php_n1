@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình filesystem (local, public, S3...) cho việc lưu trữ file/ảnh.
+// Ghi chú: cẩn thận khi dùng S3, đảm bảo khóa AWS không commit và cấu hình qua `.env`.
 return [
     /*
     |--------------------------------------------------------------------------

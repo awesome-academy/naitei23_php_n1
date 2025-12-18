@@ -1,5 +1,10 @@
 @props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-1 bg-white'])
 
+{{-- Ghi chú (Tiếng Việt):
+    - Component dropdown dùng Alpine.js (`x-data`) để điều khiển trạng thái mở/đóng.
+    - Tránh duplicate script: nếu cần keyboard navigation nâng cao, tách vào file JS dùng chung.
+--}}
+
 @php
 switch ($align) {
     case 'left':

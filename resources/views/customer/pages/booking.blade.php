@@ -1,5 +1,9 @@
 @extends('customer.layouts.app')
 
+{{-- Ghi chú (Tiếng Việt):
+    - Trang booking chứa form đặt chỗ cho một lịch trình tour.
+    - Có phần tính toán giá dựa trên exchange rate; logic này có thể chuyển sang JS riêng.
+--}}
 @section('title', __('common.book_tour'))
 
 @section('content')

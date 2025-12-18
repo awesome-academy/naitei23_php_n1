@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình thuật toán hash mật khẩu (bcrypt / argon...).
+// Ghi chú: giữ `bcrypt` hoặc `argon2` tùy yêu cầu bảo mật; tăng `rounds` sẽ tăng thời gian hash.
 return [
     /*
     |--------------------------------------------------------------------------

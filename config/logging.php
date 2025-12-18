@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình logging (Monolog) cho ứng dụng: kênh mặc định, mức log, handler...
+// Ghi chú: cấu hình `LOG_CHANNEL` và `LOG_LEVEL` qua .env; tránh log thông tin nhạy cảm.
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;

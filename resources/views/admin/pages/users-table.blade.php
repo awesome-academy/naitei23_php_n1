@@ -1,3 +1,7 @@
+{{-- Ghi chú (Tiếng Việt):
+    - Partial `users-table` chỉ chứa body của bảng users để dễ render lại qua AJAX.
+    - Đảm bảo dữ liệu `$users` truyền vào luôn đúng kiểu paginator hoặc collection.
+--}}
 <tbody>
     @forelse ($users as $user)
         <tr>

@@ -1,5 +1,9 @@
 @props(['errors'])
 
+{{-- Ghi chú (Tiếng Việt):
+    - Hiển thị danh sách lỗi validation cho form.
+    - Component này được dùng tại các trang đăng ký/đăng nhập để thông báo chi tiết lỗi.
+--}}
 @if ($errors->any())
     <div {{ $attributes }}>
         <div class="font-medium text-red-600">

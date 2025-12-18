@@ -1,4 +1,8 @@
 <x-guest-layout>
+    {{-- Ghi chú (Tiếng Việt):
+        - View này dùng để xác nhận mật khẩu khi thực hiện các hành động quan trọng.
+        - Form sẽ gửi đến route `password.confirm` để kiểm tra lại mật khẩu người dùng.
+    --}}
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">

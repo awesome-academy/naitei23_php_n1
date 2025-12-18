@@ -1,4 +1,8 @@
 <x-guest-layout>
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang yêu cầu đặt lại mật khẩu: nhập email để nhận link khôi phục.
+        - Sử dụng route `password.email` để gửi email chứa token.
+    --}}
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">

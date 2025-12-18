@@ -1,6 +1,8 @@
 @php
+    // Ghi chú (Tiếng Việt):
+    // Biểu diễn thông báo flash (thường dùng để báo thành công sau khi thực hiện hành động).
     $flashMessage = session('success');
-@endphp
+endphp
 
 <div class="flash-message-container">
     @if($flashMessage)

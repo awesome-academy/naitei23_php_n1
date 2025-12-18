@@ -1,3 +1,8 @@
+{{-- Ghi chú (Tiếng Việt):
+    - File chứa modal thêm/sửa category cho admin.
+    - Sử dụng id `categoryModal` và `editCategoryModal` để mở/đóng từ JS.
+    - Đã chuyển các handler đóng modal chung vào `admin-modal.js` nên tránh lặp mã JS.
+--}}
 <div id="categoryModal" class="modal" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">

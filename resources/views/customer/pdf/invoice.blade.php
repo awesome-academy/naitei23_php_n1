@@ -1,7 +1,10 @@
 @php
+    // Ghi chú (Tiếng Việt):
+    // Mẫu hóa đơn PDF mặc định hiển thị bằng tiếng Anh để đảm bảo định dạng và ký tự trong file PDF.
+    // Nếu cần hỗ trợ đa ngôn ngữ cho hóa đơn, cân nhắc tạo templates riêng cho từng ngôn ngữ.
     // Force English for invoice layout
     app()->setLocale('en');
-@endphp
+endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>

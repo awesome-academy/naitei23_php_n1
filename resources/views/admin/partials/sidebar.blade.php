@@ -1,4 +1,8 @@
 @php
+    // Ghi chú (Tiếng Việt):
+    // Mảng `$navItems` định nghĩa các mục điều hướng bên trái.
+    // Mỗi mục có `label` (hiển thị), `route` (tên route), và `icon` (mảng path SVG).
+    // Khi cần thêm mục mới, chỉ cần đẩy thêm phần tử vào mảng này.
     $navItems = [
         ['label' => __('common.dashboard'), 'route' => 'admin.dashboard', 'icon' => ['M3 12h18', 'M3 6h18', 'M3 18h18']],
         ['label' => __('common.users'), 'route' => 'admin.users', 'icon' => ['M5 20h14', 'M12 14a4 4 0 1 0 0-8 4 4 0 0 0 0 8z']],

@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình Laravel Sanctum (API token / SPA stateful auth).
+// Ghi chú: thêm domain vào `stateful` khi deploy SPA để cookies hoạt động đúng.
 return [
     /*
     |--------------------------------------------------------------------------

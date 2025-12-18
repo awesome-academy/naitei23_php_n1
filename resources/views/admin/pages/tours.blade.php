@@ -7,6 +7,10 @@
 @section('page-title', __('common.tour_list'))
 
 @section('content')
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang danh sách tours với modal thêm/sửa tour.
+        - Xử lý preview ảnh và edit modal có logic JS lặp ở nhiều nơi; cân nhắc refactor vào `resources/js/admin-tours.js`.
+    --}}
     <div style="margin-bottom: 20px;">
         <button class="btn btn-primary" onclick="openTourModal()">
             <i class="fas fa-plus"></i> {{ __('common.add_new_tour') }}

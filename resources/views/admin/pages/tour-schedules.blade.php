@@ -3,6 +3,11 @@
 @section('page-title', __('common.tour_schedules'))
 
 @section('content')
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang quản lý tour schedules (lịch trình).
+        - Các hàm JS dưới cùng (open/edit/delete) thao tác trực tiếp DOM để cập nhật form và action.
+        - Nên cân nhắc chuyển các handler JS này sang `resources/js/admin-schedules.js` để dễ bảo trì.
+    --}}
     <div style="margin-bottom: 20px;">
         <button class="btn btn-primary" onclick="openTourScheduleModal()">
             <i class="fas fa-plus"></i> {{ __('common.add_new_schedule') }}

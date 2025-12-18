@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình hệ thống view (đường dẫn load Blade, nơi lưu view đã compile).
+// Ghi chú: nếu deploy nhiều release, đảm bảo thư mục `storage/framework/views` có quyền ghi.
 return [
     /*
     |--------------------------------------------------------------------------

@@ -7,6 +7,10 @@
 @section('page-title', __('common.reviews'))
 
 @section('content')
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang quản lý review: liệt kê review, cho phản hồi (admin reply), xóa reply.
+        - Modal `adminReplyModal` dùng để thêm/sửa reply; API các endpoint cần xử lý tương ứng.
+    --}}
     <div class="table-wrapper">
         <div class="table-head">
             <div class="table-title">{{ __('common.all_reviews') }}</div>

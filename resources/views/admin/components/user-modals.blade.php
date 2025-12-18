@@ -1,4 +1,9 @@
 <!-- User Modal -->
+{{-- Ghi chú (Tiếng Việt):
+    - Modal quản lý User (thêm / sửa).
+    - Form thêm user gửi tới `admin.users.store`; form sửa dùng method PUT.
+    - Các role checkbox/select nên render từ controller để tránh mismatch.
+--}}
 <div id="userModal" class="modal" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">

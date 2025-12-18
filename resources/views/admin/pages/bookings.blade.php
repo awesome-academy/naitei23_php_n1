@@ -1,5 +1,9 @@
 @extends('admin.layouts.app')
 
+{{-- Ghi chú (Tiếng Việt):
+    - Trang quản lý booking: liệt kê đặt chỗ với trạng thái và ngày tạo.
+    - Đây là trang chỉ đọc (admin có thể thêm bộ lọc hoặc hành động nếu cần).
+--}}
 @section('page-title', __('common.bookings'))
 
 @section('content')

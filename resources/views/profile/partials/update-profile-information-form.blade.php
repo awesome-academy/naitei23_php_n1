@@ -1,3 +1,7 @@
+{{-- Ghi chú (Tiếng Việt):
+    - Partial cập nhật thông tin cá nhân (name, email).
+    - Nếu email thay đổi và cần verify, có form `send-verification` sẵn để gửi lại link xác thực.
+--}}
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">

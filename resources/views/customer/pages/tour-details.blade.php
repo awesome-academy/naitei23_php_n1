@@ -1,6 +1,11 @@
 @php
     use Illuminate\Support\Str;
-@endphp
+endphp
+
+{{-- Ghi chú (Tiếng Việt):
+    - Trang chi tiết tour (customer) hiển thị toàn bộ thông tin tour, ảnh, lịch trình, review, và script tương tác.
+    - File này khá dài; nếu muốn giảm độ phức tạp, cân nhắc tách phần review, booking widget, và scripts thành partials/JS riêng.
+--}}
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>

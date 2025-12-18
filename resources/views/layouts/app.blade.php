@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+{{--
+    Ghi chú (Tiếng Việt):
+    - `layouts.app` là layout chính cho các trang có header/navigation.
+    - Bao gồm Vite assets (`app.css`, `app.js`). Nếu cần thêm script dùng chung, include ở đây.
+--}}
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">

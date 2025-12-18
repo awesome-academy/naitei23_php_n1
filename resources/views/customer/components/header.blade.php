@@ -1,3 +1,9 @@
+{{--
+    Ghi chú (Tiếng Việt):
+    - `header.blade.php` hiển thị phần đầu trang cho người dùng (logo, tìm kiếm, ngôn ngữ, dropdown người dùng).
+    - Phần script phía dưới xử lý language switcher và user dropdown.
+    - Nếu script này xuất hiện trong nhiều nơi, cân nhắc tách thành file JS dùng chung.
+--}}
 <header class="bg-white/70 backdrop-blur border-b border-white/60 shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 lg:px-8">
         <div class="flex justify-between items-center">

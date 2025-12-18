@@ -1,3 +1,8 @@
+{{-- Ghi chú (Tiếng Việt):
+    - Partial xóa tài khoản.
+    - Sử dụng `x-modal` (component) để show confirm dialog an toàn.
+    - Form gửi `profile.destroy` với method DELETE và yêu cầu nhập mật khẩu.
+--}}
 <section class="space-y-6">
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">

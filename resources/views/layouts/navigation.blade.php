@@ -1,3 +1,8 @@
+{{-- Ghi chú (Tiếng Việt):
+    - Component navigation dùng trên trang có header chính.
+    - Sử dụng Alpine.js cho trạng thái `open` (mobile) và `langOpen` (language menu).
+    - Nếu muốn tái sử dụng logic language dropdown, tách JS vào file riêng trong `resources/js/`.
+--}}
 <nav x-data="{ open: false, langOpen: false }" class="bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-lg">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">

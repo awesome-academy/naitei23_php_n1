@@ -3,6 +3,10 @@
 @section('page-title', __('common.user_management'))
 
 @section('content')
+    {{-- Ghi chú (Tiếng Việt):
+        - Trang quản lý người dùng (list + filter + search + pagination AJAX).
+        - JS phía dưới xử lý AJAX pagination và các action edit/delete; kiểm tra tương thích khi thay đổi id/hook DOM.
+    --}}
     <div style="margin-bottom: 20px;">
         <button class="btn btn-primary" onclick="openUserModal()">
             <i class="fas fa-plus"></i> {{ __('common.add_new_user') }}

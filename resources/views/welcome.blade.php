@@ -1,6 +1,11 @@
 @php
     use Illuminate\Support\Str;
-@endphp
+endphp
+
+{{-- Ghi chú (Tiếng Việt):
+    - Trang welcome/landing page chứa nhiều logic JS (search, filter, price popup).
+    - Nếu script quá dài, tách vào `resources/js/` và include bằng Vite để dễ maintain.
+--}}
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>

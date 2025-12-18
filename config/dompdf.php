@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình thư viện DomPDF (dùng cho xuất PDF hoá đơn, báo cáo...).
+// Ghi chú: sử dụng font DejaVu Sans để hỗ trợ Unicode/tiếng Việt khi render PDF.
 return [
     /*
     |--------------------------------------------------------------------------

@@ -1,3 +1,9 @@
+{{--
+    Ghi chú (Tiếng Việt):
+    - `footer.blade.php` chứa chân trang dùng lại cho phần người dùng (customer).
+    - Bao gồm các liên kết nhanh, hỗ trợ, và thông tin công ty.
+    - Nội dung nên ngắn gọn; nếu cần mở rộng, tách thành partials nhỏ hơn.
+--}}
 <footer class="bg-gray-50 mt-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">

@@ -1,4 +1,8 @@
 <!-- Tour Modal -->
+{{-- Ghi chú (Tiếng Việt):
+    - Modal thêm/sửa Tour cho admin.
+    - Các nút đóng hiện đang dùng `onclick` inline; cân nhắc dùng `data-modal-close` để tận dụng `admin-modal.js`.
+--}}
 <div id="tourModal" class="modal" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">

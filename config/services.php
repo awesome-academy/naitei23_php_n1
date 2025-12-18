@@ -1,6 +1,7 @@
 <?php
 
 // Cấu hình credentials cho các dịch vụ bên thứ ba (Mailgun, SES, Google, Facebook, Stripe...).
+// Ghi chú: các khóa API phải lưu trong `.env` và không commit vào kho mã nguồn.
 return [
     /*
     |--------------------------------------------------------------------------
